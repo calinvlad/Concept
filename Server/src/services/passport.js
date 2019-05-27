@@ -1,0 +1,36 @@
+const passport = require('passport')
+const db = require('../../db/models')
+
+const JwtStrategy = require('passport-jwt').Strategy
+const ExtractJwt = require('passport-jwt').ExtractJwt
+
+const config = require('../../config')
+
+/**
+ * Refactor try / catch
+ */
+
+passport.use(
+    new JwtStrategy({
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey: config.authentication.jwtSecret
+    }, async function (jwtPayload, done) {
+        try {
+            console.log('xxxxxx', jwtPayload)
+            const user = await db.Users.findOne({
+                where: {
+                    userId: jwtPayload.userId
+                }
+            })
+            console.log('uuuuuuu', user)
+            if (!user) {
+                return done(new Error(), false)
+            }
+            return done(null, user)
+        } catch (err) {
+            return done(new Error(), false)
+        }
+    })
+)
+
+module.exports = null

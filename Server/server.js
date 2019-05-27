@@ -2,13 +2,14 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const {sequelize} = require('./db/models')
 const cors = require('cors')
+const passport = require('passport')
 const config = require('./config')
 
 const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 
-
+require('./src/services/passport')
 require('./src/routes')(app)
 
 

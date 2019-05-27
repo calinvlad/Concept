@@ -1,4 +1,6 @@
 const AuthCtrl = require('./controller/AuthCtrl')
+const checkAuth = require('./middleware/checkAuthentication')
+const passport = require('passport')
 
 module.exports = (app) => {
 
@@ -12,12 +14,14 @@ module.exports = (app) => {
 
     app.post('/auth/register', AuthCtrl.register)
 
+    app.post('/auth/login', AuthCtrl.login)
+
     /**
-     * Login user, set token,
-     * Check hashed password
-     * Return User
+     * Passport test isLoggedIn
      */
 
-    app.post('/auth/login', AuthCtrl.login)
+    app.get('/test', passport.authenticate('jwt', {session:false}), (req, res) => {
+        res.status(200).send({success: true, message: 'Hello Stranger'})
+    })
 
 }
