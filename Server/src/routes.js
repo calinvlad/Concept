@@ -2,6 +2,8 @@ const AuthCtrl = require('./controller/AuthCtrl')
 const checkAuth = require('./middleware/checkAuthentication')
 const passport = require('passport')
 
+const ProductCtrl = require('./controller/ProductsCtrl')
+
 module.exports = (app) => {
 
     /**
@@ -13,15 +15,20 @@ module.exports = (app) => {
      */
 
     app.post('/auth/register', AuthCtrl.register)
-
     app.post('/auth/login', AuthCtrl.login)
 
     /**
-     * Passport test isLoggedIn
+     * Products Routes:
+     * Create
+     * Read
+     * Update
+     * Delete
      */
 
-    app.get('/test', passport.authenticate('jwt', {session:false}), (req, res) => {
-        res.status(200).send({success: true, message: 'Hello Stranger'})
-    })
+    //ToDo: Check relation user has many products
 
+    app.post('/products/create', ProductCtrl.create)
+    app.get('/products/list', ProductCtrl.list)
+    app.put('/products/edit/:productId', ProductCtrl.update)
+    app.delete('/products/delete/:productId', ProductCtrl.delete)
 }

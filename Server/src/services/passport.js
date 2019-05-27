@@ -6,23 +6,17 @@ const ExtractJwt = require('passport-jwt').ExtractJwt
 
 const config = require('../../config')
 
-/**
- * Refactor try / catch
- */
-
 passport.use(
     new JwtStrategy({
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: config.authentication.jwtSecret
     }, async function (jwtPayload, done) {
         try {
-            console.log('xxxxxx', jwtPayload)
             const user = await db.Users.findOne({
                 where: {
                     userId: jwtPayload.userId
                 }
             })
-            console.log('uuuuuuu', user)
             if (!user) {
                 return done(new Error(), false)
             }

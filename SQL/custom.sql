@@ -24,7 +24,7 @@ CREATE TABLE address (
   city VARCHAR(60) NOT NULL,
   street TEXT,
   building VARCHAR(60) NOT NULL,
-  user_id INT UNIQUE,
+  user_id INT UNIQUE NOT NULL,
   FOREIGN KEY (user_id)
         REFERENCES users(user_id)
         ON DELETE CASCADE
@@ -35,8 +35,8 @@ CREATE TABLE products (
   name VARCHAR(60) NOT NULL,
   category VARCHAR(60) NOT NULL,
   price INT NOT NULL,
-  photo TEXT,
-  user_id INT,
+  images TEXT,
+  user_id INT NOT NULL,
   FOREIGN KEY (user_id)
     REFERENCES users(user_id)
 ) Engine=InnoDB;
