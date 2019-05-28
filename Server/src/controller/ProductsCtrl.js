@@ -2,7 +2,7 @@ const db = require('../../db/models')
 
 module.exports = {
     async create(req, res) {
-        const user = req.body.userId
+        const user = req.query.userId
         const {name, category, price, images} = req.body
 
         await db.Products.create({
