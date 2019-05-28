@@ -1,11 +1,12 @@
 DROP IF NOT EXISTS DATABASE custom;
 CREATE DATABASE IF NOT EXISTS custom;
 
-DROP TABLE details;
-DROP TABLE specs;
-DROP TABLE address;
-DROP TABLE products;
-DROP TABLE users;
+DROP TABLE Orders;
+DROP TABLE Details;
+DROP TABLE Specs;
+DROP TABLE Address;
+DROP TABLE Products;
+DROP TABLE Users;
 
 
 CREATE TABLE Users (
