@@ -2,17 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b04a455e-4f5a-478c-a22e-164efe7593c3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Server/db/models/orders.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/controller/OrdersCtrl.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL/custom.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL/custom.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/db/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/Server/db/config/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/db/migrations/20190526185301-create-users.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/db/migrations/20190527182812-create-products.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/db/models/products.js" beforeDir="false" afterPath="$PROJECT_DIR$/Server/db/models/products.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/controller/ProductsCtrl.js" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/controller/ProductsCtrl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/routes.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,7 +16,17 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -42,8 +44,9 @@
         <option value="$PROJECT_DIR$/Server/src/routes.js" />
         <option value="$PROJECT_DIR$/Server/db/models/products.js" />
         <option value="$PROJECT_DIR$/Server/db/models/users.js" />
-        <option value="$PROJECT_DIR$/Server/.gitignore" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
+        <option value="$PROJECT_DIR$/Server/.gitignore" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -81,10 +84,18 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Server" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Server" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -110,12 +121,12 @@
       <updated>1558929718495</updated>
       <workItem from="1558929721957" duration="4880000" />
       <workItem from="1558981326760" duration="6853000" />
-      <workItem from="1559063359230" duration="608000" />
+      <workItem from="1559063359230" duration="847000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12341000" />
+    <option name="totallyTimeSpent" value="12580000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -128,18 +139,19 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project Explorer" order="0" />
       <window_info id="Job Explorer" order="1" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" />
-      <window_info content_ui="combo" id="Project" order="4" visible="true" weight="0.25767368" />
+      <window_info active="true" content_ui="combo" id="Project" order="4" visible="true" weight="0.25767368" />
       <window_info id="Structure" order="5" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="DB Execution Console" order="0" />
       <window_info anchor="bottom" id="Docker" order="1" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="2" weight="0.32884902" />
       <window_info anchor="bottom" id="GraphQL" order="3" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="4" visible="true" weight="0.49327356" />
+      <window_info anchor="bottom" id="Terminal" order="4" visible="true" weight="0.33632287" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="6" />
       <window_info anchor="bottom" id="Console" order="7" />
@@ -243,13 +255,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Server/db/models/users.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -261,6 +266,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="165" column="12" lean-forward="true" selection-start-line="165" selection-start-column="12" selection-end-line="165" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
