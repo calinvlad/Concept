@@ -1,8 +1,7 @@
-const AuthCtrl = require('./controller/AuthCtrl')
 const checkAuth = require('./middleware/checkAuthentication')
-const passport = require('passport')
-
+const AuthCtrl = require('./controller/AuthCtrl')
 const ProductCtrl = require('./controller/ProductsCtrl')
+const OrdersCtrl = require('./controller/OrdersCtrl')
 
 module.exports = (app) => {
 
@@ -29,6 +28,19 @@ module.exports = (app) => {
 
     app.post('/products/create', ProductCtrl.create)
     app.get('/products/list', ProductCtrl.list)
-    app.put('/products/edit/:productId', ProductCtrl.update)
+    app.put('/products/update/:productId', ProductCtrl.update)
     app.delete('/products/delete/:productId', ProductCtrl.delete)
+
+    /**
+     * Orders Routes:
+     * Create
+     * Read
+     * Update
+     * Delete
+     */
+
+    app.post('/orders/create', OrdersCtrl.create)
+    app.get('/orders/list', OrdersCtrl.list)
+    app.put('/orders/update/:orderId', OrdersCtrl.update)
+    app.delete('/orders/delete/:orderId', OrdersCtrl.delete)
 }
