@@ -12,7 +12,7 @@ module.exports = (app) => {
      * Forgot
      * Reset
      */
-
+    //ToDo: Forgot && Reset Password
     app.post('/auth/register', AuthCtrl.register)
     app.post('/auth/login', AuthCtrl.login)
 
@@ -23,8 +23,6 @@ module.exports = (app) => {
      * Update
      * Delete
      */
-
-    //ToDo: Check relation user has many products
 
     app.post('/products/create', ProductCtrl.create)
     app.get('/products/list', ProductCtrl.list)
