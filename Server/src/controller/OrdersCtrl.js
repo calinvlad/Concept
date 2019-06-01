@@ -7,7 +7,7 @@ module.exports = {
 
         await db.Orders.create({
             userId: user,
-            products: products,
+            products: JSON.stringify(products),
             total: total,
             address: address
         })

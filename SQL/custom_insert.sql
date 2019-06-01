@@ -1,8 +1,7 @@
 -- Users data
-INSERT INTO users (fname, lname, email, pass) 
+INSERT INTO Users (fname, lname, email, pass, phone)
 VALUES 
-('calin', 'vlad', 'calinvlad.t@gmail.com', 'Pwd1q2w'),
-('john', 'snow', 'john@pussy.com', 'Pwd1q2w');
+('calin', 'vlad', 'calinvlad.t@gmail.com', 'Pwd1q2w', '+40727223737');
 
 -- Address data
 INSERT INTO address (address1, city, building, user_id)  VALUES
