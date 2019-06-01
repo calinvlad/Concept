@@ -11,6 +11,9 @@ function jwtSignUser (user) {
 
 module.exports = {
     async register(req, res) {
+        let errAddress, address
+        let err, user
+        const {address1, address2, city} = req.body
         await db.Users.create({
             fname: req.body.fname,
             lname: req.body.lname,
@@ -18,7 +21,27 @@ module.exports = {
             phone: req.body.phone,
             pass: req.body.pass
         })
-            .then((data) => res.status(200).send({success: true, data: data}))
+            .then(async (data) => {
+                await db.Address.create({
+                    userId: data.userId,
+                    address1: req.body.address1,
+                    address2: req.body.address2,
+                    city: req.body.city
+                })
+                    .then((data) => {
+                        res.status(200).send({success: true, message: 'Your account was created successfully', data: data})
+                    })
+                    .catch(async err => {
+                        await db.Users.destroy({
+                            where: {
+                                userId: data.userId
+                            }
+                        }).then(() => {
+                            res.status(400).send({success: false, message: 'Address could not be created', data: err})
+                        })
+
+                    })
+            })
             .catch(err => {
                 res.status(400).send({success: false, data: err})
             })
@@ -34,14 +57,19 @@ module.exports = {
             .then((data) => {
                 user = data
                 bcrypt.compare(req.body.pass, data.pass)
-                    .then((data) => {
+                    .then(async (data) => {
                         if(data){
-                            res.status(200).send({
-                                success: true,
-                                message: `Welcome ${user.fname}`,
-                                data: user,
-                                token: jwtSignUser(user.toJSON())
-                            })
+
+                            await db.Address.findOne({where: {userId: user.userId}})
+                                .then(data => {
+                                    res.status(200).send({
+                                        success: true,
+                                        message: `Welcome ${user.fname}`,
+                                        data: user,
+                                        address: data,
+                                        token: jwtSignUser(user.toJSON())
+                                    })
+                                })
                         }
                         else {
                             res.status(403).send({success: false, message: 'Oops, your email or password does not match'})

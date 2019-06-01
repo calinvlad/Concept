@@ -18,13 +18,11 @@ CREATE TABLE Users (
   pass  VARCHAR(60) NOT NULL
 ) ENGINE=InnoDB;
 
-CREATE TABLE Address (
+CREATE TABLE Addresses (
   address_id INT(8) PRIMARY KEY AUTO_INCREMENT,
   address1 TEXT,
   address2 TEXT,
   city VARCHAR(60) NOT NULL,
-  street TEXT,
-  building VARCHAR(60) NOT NULL,
   user_id INT UNIQUE NOT NULL,
   FOREIGN KEY (user_id)
         REFERENCES Users(user_id)

@@ -15,6 +15,7 @@ export const logout = async ({ commit }) => {
 export const register = async ({ commit }, payload) => {
     const response = await api().post('auth/register', payload)
     console.log('REGISTER: ', response)
+    router.push({name: 'login'})
 }
 
 export default {

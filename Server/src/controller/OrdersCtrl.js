@@ -9,7 +9,7 @@ module.exports = {
             userId: user,
             products: JSON.stringify(products),
             total: total,
-            address: address
+            address: JSON.stringify(address)
         })
             .then((data) => {
                 res.status(200).send({success: true, message: 'Your order was placed', data: data})
