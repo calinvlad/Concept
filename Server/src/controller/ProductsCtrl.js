@@ -56,5 +56,16 @@ module.exports = {
         })
             .then(() => res.status(200).send({success: true, message: `Product was deleted successfully`}))
             .catch(err => res.status(500).send({success: false, message: `Product could not be deleted`}))
+    },
+    async listById(req, res) {
+        await db.Products.findOne({
+            where: {
+                productId: req.params.productId
+            }
+        })
+            .then((data) => {
+                res.status(200).send({success: true, message: 'Fetching product went fine', data: data})
+            })
+            .catch(err => res.status(400).send({success: false, message: 'Product could not be fetched'}))
     }
 }

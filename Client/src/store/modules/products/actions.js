@@ -1,4 +1,5 @@
 import api from "@/plugins/api";
+import store from '@/store'
 import router from '@/router.js'
 
 export const list = async ({commit}) => {
@@ -6,7 +7,13 @@ export const list = async ({commit}) => {
     commit('LIST', data)
 }
 
+export const listById = async ({commit} ) => {
+    const data = (await api().get(`/products/${router.currentRoute.params.productId}`)).data
+    commit('LISTBYID', data)
+}
+
 
 export default {
-    list
+    list,
+    listById
 }

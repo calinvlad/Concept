@@ -6,8 +6,11 @@
                 <ul>
                     <li>{{product.category}}</li>
                     <li>{{product.price}} $</li>
+                    <li class="my-2">
+                        <b-button variant="primary" size="sm" @click="view(product.productId)">View</b-button>
+                    </li>
                     <li>
-                        <b-button size="sm" @click="order(product)">Order</b-button>
+                        <b-button variant="warning" size="sm" @click="order(product)">Order</b-button>
                     </li>
                 </ul>
             </li>
@@ -19,6 +22,9 @@
 <script>
     export default {
         methods: {
+            view(data) {
+                this.$router.push({name: 'product', params: {productId: data}})
+            },
             order(data) {
                 this.$store.dispatch('checkout/list', data)
             }

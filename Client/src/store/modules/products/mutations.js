@@ -1,8 +1,11 @@
-import {LIST} from './mutation-types'
+import {LIST, LISTBYID} from './mutation-types'
 
 export default {
     [LIST](state, response) {
         state.list = response.data
+    },
+    [LISTBYID](state, response) {
+        state.listById = response.data
     }
 }
 
