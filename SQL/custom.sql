@@ -1,15 +1,16 @@
-DROP IF NOT EXISTS DATABASE custom;
-CREATE DATABASE IF NOT EXISTS custom;
+DROP DATABASE IF EXISTS custom;
+CREATE DATABASE custom;
 
-DROP TABLE Orders;
-DROP TABLE Details;
-DROP TABLE Specs;
-DROP TABLE Address;
-DROP TABLE Products;
-DROP TABLE Users;
+DROP TABLE IF EXISTS custom.Images;
+DROP TABLE IF EXISTS custom.Orders;
+DROP TABLE IF EXISTS custom.Details;
+DROP TABLE IF EXISTS custom.Specs;
+DROP TABLE IF EXISTS custom.Address;
+DROP TABLE IF EXISTS custom.Products;
+DROP TABLE IF EXISTS custom.Users;
 
 
-CREATE TABLE Users (
+CREATE TABLE custom.Users (
   user_id INT(8) PRIMARY KEY AUTO_INCREMENT,
   fname VARCHAR(60) NOT NULL,
   lname VARCHAR(60) NOT NULL,
@@ -18,7 +19,7 @@ CREATE TABLE Users (
   pass  VARCHAR(60) NOT NULL
 ) ENGINE=InnoDB;
 
-CREATE TABLE Addresses (
+CREATE TABLE custom.Addresses (
   address_id INT(8) PRIMARY KEY AUTO_INCREMENT,
   address1 TEXT,
   address2 TEXT,
@@ -29,18 +30,26 @@ CREATE TABLE Addresses (
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE Products (
+CREATE TABLE custom.Products (
   product_id INT(8) PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(60) NOT NULL,
   category VARCHAR(60) NOT NULL,
   price VARCHAR(20) NOT NULL,
-  images TEXT,
   user_id INT NOT NULL,
   FOREIGN KEY (user_id)
     REFERENCES Users(user_id)
 ) Engine=InnoDB;
 
-CREATE TABLE Details (
+CREATE TABLE custom.Images (
+    image_id INT(8) PRIMARY KEY AUTO_INCREMENT,
+    image VARCHAR(255) NOT NULL,
+    product_id INT NOT NULL,
+    FOREIGN KEY (product_id)
+        REFERENCES Products(product_id)
+        ON DELETE CASCADE
+) Engine=InnoDB
+
+CREATE TABLE custom.Details (
   detail_id INT(8) PRIMARY KEY AUTO_INCREMENT,
   text TEXT,
   product_id INT,
@@ -49,7 +58,7 @@ CREATE TABLE Details (
     ON DELETE CASCADE
 ) Engine=InnoDB;
 
-CREATE TABLE Specs (
+CREATE TABLE custom.Specs (
   spec_id INT(8) PRIMARY KEY AUTO_INCREMENT,
   text TEXT,
   product_id INT,
@@ -58,7 +67,7 @@ CREATE TABLE Specs (
     ON DELETE CASCADE
 ) Engine=InnoDB;
 
-CREATE TABLE Orders (
+CREATE TABLE custom.Orders (
     order_id INT(8) PRIMARY KEY AUTO_INCREMENT,
     products TEXT NOT NULL,
     user_id INT NOT NULL,

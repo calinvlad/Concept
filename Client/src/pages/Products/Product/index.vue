@@ -44,11 +44,8 @@
         },
         methods: {
             update(data) {
-                console.log('UPDATE: ', data)
-
                 const formData = new FormData()
                 formData.append('file', data.img1);
-                console.log('FORM DATA: ', formData)
                 const allData = {formData, data}
                 this.$store.dispatch('products/update', allData)
             }

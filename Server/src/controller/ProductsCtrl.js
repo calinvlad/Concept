@@ -3,13 +3,12 @@ const db = require('../../db/models')
 module.exports = {
     async create(req, res) {
         const user = req.query.userId
-        const {name, category, price, images} = req.body
+        const {name, category, price} = req.body
 
         await db.Products.create({
             name: name,
             category: category,
             price: price,
-            images: images,
             userId: user
         })
             .then((data) => {
@@ -20,7 +19,11 @@ module.exports = {
         res.status(500).send({success: false, message: 'Internal server error'})
     },
     async list(req, res) {
-        await db.Products.findAll()
+        await db.Products.findAll({
+            include: [{
+                model: db.Images
+            }]
+        })
             .then((data) => {
                 res.status(200).send({success: true, message: '', data: data})
             })
@@ -31,23 +34,20 @@ module.exports = {
         const userId = req.query.userId
         const {name, price, category} = req.body
 
-        console.log('BODY ************* ', req.body)
-        console.log('FILE ************** ', req.file)
-
-        // await db.Products.update({
-        //     name: name,
-        //     category: category,
-        //     price: price
-        // },{
-        //     where: {
-        //         userId: userId,
-        //         productId: productId
-        //     }
-        // })
-        //     .then((data) => {
-        //         res.status(200).send({success: true, message: 'Product was updated successfully'})
-        //     })
-        //     .catch(err => res.status(403).send({success: false, message: 'Product could not be updated', data: err}))
+        await db.Products.update({
+            name: name,
+            category: category,
+            price: price
+        },{
+            where: {
+                userId: userId,
+                productId: productId
+            }
+        })
+            .then((data) => {
+                res.status(200).send({success: true, message: 'Product was updated successfully'})
+            })
+            .catch(err => res.status(403).send({success: false, message: 'Product could not be updated', data: err}))
     },
     async delete(req, res) {
         const productId = req.params.productId
@@ -65,7 +65,10 @@ module.exports = {
         await db.Products.findOne({
             where: {
                 productId: req.params.productId
-            }
+            },
+            include: [{
+                model: db.Images
+            }]
         })
             .then((data) => {
                 res.status(200).send({success: true, message: 'Fetching product went fine', data: data})

@@ -23,11 +23,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'price'
     },
-    images: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      field: 'images'
-    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -41,6 +36,10 @@ module.exports = (sequelize, DataTypes) => {
     Products.belongsTo(models.Users, {
       foreignKey: 'userId',
       constraints: false
+    })
+    Products.hasMany(models.Images, {
+      foreignKey: 'imageId',
+      constraints: true
     })
   };
   return Products;

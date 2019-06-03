@@ -1,3 +1,6 @@
-# Concept
+for webstorm database system: 
 
-User table has one relationshio with Address table;
+If bug: 
+```
+jdbc:mysql://localhost/db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+```
