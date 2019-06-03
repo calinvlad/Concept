@@ -7,6 +7,7 @@ const passport = require('passport')
 const config = require('./config')
 
 const app = express()
+app.use(express.static(__dirname + "/uploads"))
 app.use(cors())
 app.use(bodyParser.json())
 app.use(morgan('combined'))

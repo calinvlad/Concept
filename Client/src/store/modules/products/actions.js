@@ -13,8 +13,11 @@ export const listById = async ({commit}) => {
 }
 
 export const update = async ({commit}, data) => {
-    await api().post(`/products/images?productId=${router.currentRoute.params.productId}`,  data.formData)
-    await api().put(`/products/update/${router.currentRoute.params.productId}?userId=2`, data.data)
+    if(data.formData) {
+        await api().post(`/products/images?productId=${router.currentRoute.params.productId}`,  data.formData)
+    }
+    await api().put(`/products/update/${router.currentRoute.params.productId}?userId=${store.state.auth.user.userId}`, data.data)
+    store.dispatch('products/listById')
 }
 
 

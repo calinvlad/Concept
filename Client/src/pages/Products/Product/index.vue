@@ -3,7 +3,9 @@
         <h1>{{product.name}}</h1>
         <p>From {{product.category}}</p>
         <p>Costs: {{product.price}} $</p>
-
+            <b-col v-for="image in images" :key="image.imageId">
+                <b-img thumbnail fluid :src="'http://localhost:8000/' + image.image" alt="Image 1" class="fix"></b-img>
+            </b-col>
         <b-form-checkbox
                 v-model="showUpdate"
         >
@@ -17,8 +19,7 @@
                 <b-form-input v-model="form.name" placeholder="Name" class="mt-3 mb-3" value="hhh"></b-form-input>
                 <b-form-input v-model="form.category" placeholder="Category" class="mb-3"></b-form-input>
                 <b-form-input v-model="form.price" placeholder="Price" class="mb-3"></b-form-input>
-                <b-form-file v-model="form.img1" class="mb-3"></b-form-file>
-                <b-form-file v-model="form.img2"></b-form-file>
+                <b-form-file v-model="form.img" class="mb-3"></b-form-file>
                 <b-button size="md" block variant="outline-secondary" class="float-right mt-3" @click="update(form)">
                     Submit
                 </b-button>
@@ -36,18 +37,24 @@
                     name: null,
                     category: null,
                     price: null,
-                    img1: null,
-                    img2: null
+                    img: null,
                 },
-                showUpdate: false
+                showUpdate: false,
             }
         },
         methods: {
             update(data) {
                 const formData = new FormData()
-                formData.append('file', data.img1);
-                const allData = {formData, data}
+                formData.append('file', data.img);
+                let allData
+                if(data.img) {
+                    allData = {formData, data}
+                }
+                else {
+                    allData = {data}
+                }
                 this.$store.dispatch('products/update', allData)
+                this.showUpdate = false
             }
         },
         watch: {
@@ -60,6 +67,9 @@
         computed: {
             product() {
                 return this.$store.state.products.listById
+            },
+            images() {
+                return this.$store.state.products.images
             }
         },
         mounted() {
@@ -67,3 +77,8 @@
         }
     }
 </script>
+
+<style lang="sass" scoped>
+    .fix
+        width: 200px
+</style>

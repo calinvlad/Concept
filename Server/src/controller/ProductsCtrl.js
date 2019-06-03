@@ -19,12 +19,8 @@ module.exports = {
         res.status(500).send({success: false, message: 'Internal server error'})
     },
     async list(req, res) {
-        await db.Products.findAll({
-            include: [{
-                model: db.Images
-            }]
-        })
-            .then((data) => {
+        await db.Products.findAll()
+            .then(async (data) => {
                 res.status(200).send({success: true, message: '', data: data})
             })
             .catch(err => res.status(500).send({success: false, message: 'Internal server error'}))
@@ -33,7 +29,6 @@ module.exports = {
         const productId = req.params.productId
         const userId = req.query.userId
         const {name, price, category} = req.body
-
         await db.Products.update({
             name: name,
             category: category,
@@ -45,7 +40,7 @@ module.exports = {
             }
         })
             .then((data) => {
-                res.status(200).send({success: true, message: 'Product was updated successfully'})
+                res.status(200).send({success: true, message: 'Product was updated successfully', data: data})
             })
             .catch(err => res.status(403).send({success: false, message: 'Product could not be updated', data: err}))
     },
@@ -65,13 +60,19 @@ module.exports = {
         await db.Products.findOne({
             where: {
                 productId: req.params.productId
-            },
-            include: [{
-                model: db.Images
-            }]
+            }
         })
-            .then((data) => {
-                res.status(200).send({success: true, message: 'Fetching product went fine', data: data})
+            .then(async (data) => {
+                await db.Images.findAll({
+                    where: {
+                        productId: data.productId
+                    }
+                })
+                    .then((image) => {
+                        res.status(200).send({success: true, message: 'Fetching product went fine', data: data, images: image})
+                    })
+                    .catch(err => res.status(400).send({success: false, message: err}))
+
             })
             .catch(err => res.status(400).send({success: false, message: 'Product could not be fetched'}))
     }

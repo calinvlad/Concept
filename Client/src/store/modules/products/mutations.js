@@ -6,6 +6,7 @@ export default {
     },
     [LISTBYID](state, response) {
         state.listById = response.data
+        state.images = response.images
     }
 }
 
