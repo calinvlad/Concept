@@ -3,6 +3,26 @@ const AuthCtrl = require('./controller/AuthCtrl')
 const ProductCtrl = require('./controller/ProductsCtrl')
 const OrdersCtrl = require('./controller/OrdersCtrl')
 
+const multer = require('multer')
+const path = require('path');
+const storage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, './uploads');
+    },
+
+    filename: function(req, file, callback) {
+        var fname = file.fieldname + '-' + Date.now() + path.extname(file.originalname);
+
+        callback(null, fname);
+
+    }
+});
+
+const upload = multer({
+    storage: storage
+})
+
+
 module.exports = (app) => {
 
     /**
@@ -27,7 +47,7 @@ module.exports = (app) => {
     app.post('/products/create', ProductCtrl.create)
     app.get('/products/list', ProductCtrl.list)
     app.get('/products/:productId', ProductCtrl.listById)
-    app.put('/products/update/:productId', ProductCtrl.update)
+    app.put('/products/update/:productId', upload.single('file'), ProductCtrl.update)
     app.delete('/products/delete/:productId', ProductCtrl.delete)
 
     /**

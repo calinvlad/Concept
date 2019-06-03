@@ -16,8 +16,9 @@
                 >
                 <b-form-input v-model="form.name" placeholder="Name" class="mt-3 mb-3" value="hhh"></b-form-input>
                 <b-form-input v-model="form.category" placeholder="Category" class="mb-3"></b-form-input>
-                <b-form-input v-model="form.price" placeholder="Price"></b-form-input>
-
+                <b-form-input v-model="form.price" placeholder="Price" class="mb-3"></b-form-input>
+                <b-form-file v-model="form.img1" class="mb-3"></b-form-file>
+                <b-form-file v-model="form.img2"></b-form-file>
                 <b-button size="md" block variant="outline-secondary" class="float-right mt-3" @click="update(form)">
                     Submit
                 </b-button>
@@ -34,7 +35,9 @@
                 form: {
                     name: null,
                     category: null,
-                    price: null
+                    price: null,
+                    img1: null,
+                    img2: null
                 },
                 showUpdate: false
             }
@@ -42,6 +45,12 @@
         methods: {
             update(data) {
                 console.log('UPDATE: ', data)
+
+                const formData = new FormData()
+                formData.append('file', data.img1);
+                console.log('FORM DATA: ', formData)
+                const allData = {formData, data}
+                this.$store.dispatch('products/update', allData)
             }
         },
         watch: {

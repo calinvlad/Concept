@@ -30,20 +30,24 @@ module.exports = {
         const productId = req.params.productId
         const userId = req.query.userId
         const {name, price, category} = req.body
-        await db.Products.update({
-            name: name,
-            category: category,
-            price: price
-        },{
-            where: {
-                userId: userId,
-                productId: productId
-            }
-        })
-            .then((data) => {
-                res.status(200).send({success: true, message: 'Product was updated successfully'})
-            })
-            .catch(err => res.status(403).send({success: false, message: 'Product could not be updated', data: err}))
+
+        console.log('BODY ************* ', req.body)
+        console.log('FILE ************** ', req.file)
+
+        // await db.Products.update({
+        //     name: name,
+        //     category: category,
+        //     price: price
+        // },{
+        //     where: {
+        //         userId: userId,
+        //         productId: productId
+        //     }
+        // })
+        //     .then((data) => {
+        //         res.status(200).send({success: true, message: 'Product was updated successfully'})
+        //     })
+        //     .catch(err => res.status(403).send({success: false, message: 'Product could not be updated', data: err}))
     },
     async delete(req, res) {
         const productId = req.params.productId
