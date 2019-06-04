@@ -6,6 +6,11 @@
                 <ul>
                     <li>{{product.category}}</li>
                     <li>{{product.price}} $</li>
+                    <ul v-for="image in product.Images" :key="image.imageId">
+                        <b-col>
+                            <b-img thumbnail fluid :src="'http://localhost:8000/' + image.image" alt="Image 1" style="width:200px;"></b-img>
+                        </b-col>
+                    </ul>
                     <li class="my-2">
                         <b-button variant="primary" size="sm" @click="view(product.productId)">View</b-button>
                     </li>

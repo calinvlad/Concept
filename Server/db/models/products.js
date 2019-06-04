@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       constraints: false
     })
     Products.hasMany(models.Images, {
-      foreignKey: 'imageId'
+      foreignKey: 'productId'
     })
   };
   return Products;

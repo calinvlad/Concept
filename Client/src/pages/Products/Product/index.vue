@@ -4,7 +4,7 @@
         <p>From {{product.category}}</p>
         <p>Costs: {{product.price}} $</p>
             <b-col v-for="image in images" :key="image.imageId">
-                <b-img thumbnail fluid :src="'http://localhost:8000/' + image.image" alt="Image 1" class="fix"></b-img>
+                <b-img thumbnail fluid :src="'http://localhost:8000/' + image.image" alt="Image 1" style="width:200px;"></b-img>
             </b-col>
         <b-form-checkbox
                 v-model="showUpdate"
@@ -77,8 +77,3 @@
         }
     }
 </script>
-
-<style lang="sass" scoped>
-    .fix
-        width: 200px
-</style>

@@ -19,7 +19,11 @@ module.exports = {
         res.status(500).send({success: false, message: 'Internal server error'})
     },
     async list(req, res) {
-        await db.Products.findAll()
+        await db.Products.findAll({
+            include: [{
+                model: db.Images
+            }]
+        })
             .then(async (data) => {
                 res.status(200).send({success: true, message: '', data: data})
             })
@@ -27,7 +31,6 @@ module.exports = {
     },
     async update(req, res) {
         const productId = req.params.productId
-        const userId = req.query.userId
         const {name, price, category} = req.body
         await db.Products.update({
             name: name,
@@ -35,7 +38,6 @@ module.exports = {
             price: price
         },{
             where: {
-                userId: userId,
                 productId: productId
             }
         })
