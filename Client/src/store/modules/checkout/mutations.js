@@ -11,11 +11,14 @@ export default {
             }
         })
         if(!exists) {
-            state.list.push(response)
+            // state.list.push(response)
+            state.list.splice(0, 0, response)
         }
     },
     [REMOVEPRODUCT](state, response) {
-        state.list.splice(response, 1)
+        const checkoutProductList = state.list
+        const removeProductFromCheckout = checkoutProductList.map((item) => { return item.productId }).indexOf(response.productId)
+        state.list.splice(removeProductFromCheckout, 1)
     }
 }
 
