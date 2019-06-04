@@ -16,6 +16,7 @@ export const send = async ({commit}, data) => {
     const order = {products: data, total: '2222', address: address}
     await api().post(`/orders/create?userId=${user}`, order)
     router.push({name: 'products'})
+    commit('CLEARCHECKOUT')
 }
 
 

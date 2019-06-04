@@ -1,4 +1,4 @@
-import {LIST, REMOVEPRODUCT} from './mutation-types'
+import {CLEARCHECKOUT, LIST, REMOVEPRODUCT} from './mutation-types'
 
 export default {
     [LIST](state, response) {
@@ -19,6 +19,10 @@ export default {
         const checkoutProductList = state.list
         const removeProductFromCheckout = checkoutProductList.map((item) => { return item.productId }).indexOf(response.productId)
         state.list.splice(removeProductFromCheckout, 1)
+    },
+    [CLEARCHECKOUT](state, response) {
+        state.list = []
     }
+
 }
 
