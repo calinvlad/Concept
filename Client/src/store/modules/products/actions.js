@@ -20,9 +20,15 @@ export const update = async ({commit}, data) => {
     store.dispatch('products/listById')
 }
 
+export const deleteImage = async ({commit}, data) => {
+    await api().delete(`products/images?imageId=${data.imageId}&filePath=${data.image}`)
+    store.dispatch('products/listById')
+}
+
 
 export default {
     list,
     listById,
-    update
+    update,
+    deleteImage
 }

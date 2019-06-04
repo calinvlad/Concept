@@ -3,9 +3,12 @@
         <h1>{{product.name}}</h1>
         <p>From {{product.category}}</p>
         <p>Costs: {{product.price}} $</p>
+        <b-row>
             <b-col v-for="image in images" :key="image.imageId">
-                <b-img thumbnail fluid :src="'http://localhost:8000/' + image.image" alt="Image 1" style="width:200px;"></b-img>
+                <b-img thumbnail fluid :src="'http://localhost:8000/' + image.image" alt="Image 1" style="height:150px;"></b-img>
+                <b-button variant="danger" style="height: 150px;" @click="deleteImage(image)">Delete</b-button>
             </b-col>
+        </b-row>
         <b-form-checkbox
                 v-model="showUpdate"
         >
@@ -43,6 +46,9 @@
             }
         },
         methods: {
+            deleteImage(data) {
+                this.$store.dispatch('products/deleteImage', data)
+            },
             update(data) {
                 const formData = new FormData()
                 formData.append('file', data.img);

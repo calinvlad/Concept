@@ -50,7 +50,11 @@ module.exports = (app) => {
     app.put('/products/update/:productId', ProductCtrl.update)
     app.delete('/products/delete/:productId', ProductCtrl.delete)
 
+    /**
+     * Images Routes
+     */
     app.post('/products/images', upload.single('file'), ImageCtrl.create)
+    app.delete('/products/images', ImageCtrl.delete)
 
     /**
      * Orders Routes:
