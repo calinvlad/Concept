@@ -62,20 +62,16 @@ module.exports = {
         await db.Products.findOne({
             where: {
                 productId: req.params.productId
-            }
+            },
+            include: [{
+                model: db.Images
+            },{
+                model: db.Specs
+            }]
         })
-            .then(async (data) => {
-                await db.Images.findAll({
-                    where: {
-                        productId: data.productId
-                    }
-                })
-                    .then((image) => {
-                        res.status(200).send({success: true, message: 'Fetching product went fine', data: data, images: image})
-                    })
-                    .catch(err => res.status(400).send({success: false, message: err}))
-
+            .then((data) => {
+                res.status(200).send({success: true, message: 'Fetching product went fine', data: data})
             })
-            .catch(err => res.status(400).send({success: false, message: 'Product could not be fetched'}))
+            .catch(err => res.status(400).send({success: false, message: 'Product could not be fetched', data: err}))
     }
 }

@@ -25,10 +25,17 @@ export const deleteImage = async ({commit}, data) => {
     store.dispatch('products/listById')
 }
 
+export const createSpec = async ({commit}, data) => {
+    const specs = {text: data}
+    console.log('spec', specs)
+    await api().post(`products/specs?productId=${router.currentRoute.params.productId}`, specs)
+}
+
 
 export default {
     list,
     listById,
     update,
-    deleteImage
+    deleteImage,
+    createSpec
 }

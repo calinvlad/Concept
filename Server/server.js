@@ -8,6 +8,7 @@ const config = require('./config')
 
 const app = express()
 app.use(express.static(__dirname + "/uploads"))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 app.use(bodyParser.json())
 app.use(morgan('combined'))

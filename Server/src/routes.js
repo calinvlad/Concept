@@ -3,6 +3,7 @@ const AuthCtrl = require('./controller/AuthCtrl')
 const ProductCtrl = require('./controller/ProductsCtrl')
 const OrdersCtrl = require('./controller/OrdersCtrl')
 const ImageCtrl = require('./controller/ImageCtrl')
+const SpecsCtrl = require('./controller/SpecsCtrl')
 
 const multer = require('multer')
 const path = require('path')
@@ -52,9 +53,20 @@ module.exports = (app) => {
 
     /**
      * Images Routes
+     * Create
+     * Delete
      */
     app.post('/products/images', upload.single('file'), ImageCtrl.create)
     app.delete('/products/images', ImageCtrl.delete)
+
+    /**
+     * Specs Routes
+     * Create
+     * Update
+     * Delete
+     */
+
+    app.post('/products/specs', upload.none(), SpecsCtrl.create)
 
     /**
      * Orders Routes:
