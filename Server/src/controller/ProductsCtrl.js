@@ -2,14 +2,14 @@ const db = require('../../db/models')
 
 module.exports = {
     async create(req, res) {
-        const user = req.query.userId
+        const admin = req.query.adminId
         const {name, category, price} = req.body
 
-        await db.Products.create({
+        await db.Product.create({
             name: name,
             category: category,
             price: price,
-            userId: user
+            adminId: admin
         })
             .then((data) => {
                 res.status(200).send({success: true, message: 'Product was created successfully', data: data})
@@ -19,9 +19,9 @@ module.exports = {
         res.status(500).send({success: false, message: 'Internal server error'})
     },
     async list(req, res) {
-        await db.Products.findAll({
+        await db.Product.findAll({
             include: [{
-                model: db.Images
+                model: db.Image
             }]
         })
             .then(async (data) => {
@@ -32,7 +32,7 @@ module.exports = {
     async update(req, res) {
         const productId = req.params.productId
         const {name, price, category} = req.body
-        await db.Products.update({
+        await db.Product.update({
             name: name,
             category: category,
             price: price
@@ -48,9 +48,9 @@ module.exports = {
     },
     async delete(req, res) {
         const productId = req.params.productId
-        const userId = req.query.userId
+        const adminId = req.query.adminId
 
-        await db.Products.destroy({
+        await db.Product.destroy({
             where: {
                 productId: productId
             }
@@ -59,7 +59,7 @@ module.exports = {
             .catch(err => res.status(500).send({success: false, message: `Product could not be deleted`}))
     },
     async listById(req, res) {
-        await db.Products.findOne({
+        await db.Product.findOne({
             where: {
                 productId: req.params.productId
             },

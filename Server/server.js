@@ -14,6 +14,7 @@ app.use(bodyParser.json())
 app.use(morgan('combined'))
 
 require('./src/services/passport')
+require('./src/services/adminPassport')
 require('./src/routes')(app)
 
 sequelize.sync({force: false})

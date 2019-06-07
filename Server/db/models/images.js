@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-    const Images = sequelize.define('Images', {
+    const Image = sequelize.define('Image', {
         imageId: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
@@ -19,14 +19,15 @@ module.exports = (sequelize, DataTypes) => {
             field: 'product_id'
         }
     }, {
-        timestamps: false
+        timestamps: false,
+        freezeTableName: true
     });
-    Images.associate = function(models) {
-        Images.belongsTo(models.Products, {
+    Image.associate = function(models) {
+        Image.belongsTo(models.Product, {
             foreignKey: 'productId',
             constraints: true,
             onDelete: 'cascade'
         })
     };
-    return Images;
+    return Image;
 };

@@ -11,7 +11,7 @@ function hash(user, options) {
 }
 
 module.exports = (sequelize, DataTypes) => {
-  const Users = sequelize.define('Users', {
+  const User = sequelize.define('User', {
     userId: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
@@ -45,16 +45,16 @@ module.exports = (sequelize, DataTypes) => {
       field: 'pass'
     }
   }, {
+    freezeTableName: true,
     timestamps: false,
     hooks: {
       beforeCreate: hash,
       beforeUpdate: hash
     }
   });
-  Users.associate = function(models) {
+  User.associate = function(models) {
     // associations can be defined here
-    Users.hasMany(models.Products, {foreignKey: 'productId'})
   };
 
-  return Users;
+  return User;
 };

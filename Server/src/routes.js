@@ -1,4 +1,5 @@
 const checkAuth = require('./middleware/checkAuthentication')
+const AdminCtrl = require('./controller/AdminCtrl')
 const AuthCtrl = require('./controller/AuthCtrl')
 const ProductCtrl = require('./controller/ProductsCtrl')
 const OrdersCtrl = require('./controller/OrdersCtrl')
@@ -25,6 +26,15 @@ const upload = multer({
 
 
 module.exports = (app) => {
+
+    /**
+     * Admin Routes:
+     * Register
+     * Login
+     */
+
+    app.post('/auth/admin/register', AdminCtrl.register)
+    app.post('/auth/admin/login', AdminCtrl.login)
 
     /**
      * Authentication Routes:

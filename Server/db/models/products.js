@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Products = sequelize.define('Products', {
+  const Product = sequelize.define('Product', {
     productId: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
@@ -23,26 +23,27 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'price'
     },
-    userId: {
+    adminId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'user_id'
+      field: 'admin_id'
     }
   }, {
-    timestamps: false
+    timestamps: false,
+    freezeTableName: true
   });
-  Products.associate = function(models) {
+  Product.associate = function(models) {
     // associations can be defined here
-    Products.belongsTo(models.Users, {
-      foreignKey: 'userId',
+    Product.belongsTo(models.Admin, {
+      foreignKey: 'adminId',
       constraints: false
     })
-    Products.hasMany(models.Images, {
+    Product.hasMany(models.Image, {
       foreignKey: 'productId'
     })
-    Products.hasMany(models.Specs, {
+    Product.hasMany(models.Spec, {
       foreignKey: 'productId'
     })
   };
-  return Products;
+  return Product;
 };

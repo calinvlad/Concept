@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-    const Orders = sequelize.define('Orders', {
+    const Order = sequelize.define('Order', {
         orderId: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
@@ -29,14 +29,15 @@ module.exports = (sequelize, DataTypes) => {
             field: 'address'
         }
     }, {
-        timestamps: false
+        timestamps: false,
+        freezeTableName: true
     });
-    Orders.associate = function(models) {
+    Order.associate = function(models) {
         // associations can be defined here
-        Orders.belongsTo(models.Users, {
+        Order.belongsTo(models.User, {
             foreignKey: 'userId',
             constraints: false
         })
     };
-    return Orders;
+    return Order;
 };

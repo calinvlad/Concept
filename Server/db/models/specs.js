@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-    const Specs = sequelize.define('Specs', {
+    const Spec = sequelize.define('Spec', {
         specId: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
@@ -19,14 +19,15 @@ module.exports = (sequelize, DataTypes) => {
             field: 'product_id'
         }
     }, {
-        timestamps: false
+        timestamps: false,
+        freezeTableName: true
     });
-    Specs.associate = function(models) {
-        Specs.belongsTo(models.Products, {
+    Spec.associate = function(models) {
+        Spec.belongsTo(models.Product, {
             foreignKey: 'productId',
             constraints: true,
             onDelete: 'cascade'
         })
     };
-    return Specs;
+    return Spec;
 };

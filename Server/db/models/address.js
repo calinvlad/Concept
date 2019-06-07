@@ -29,11 +29,12 @@ module.exports = (sequelize, DataTypes) => {
             field: 'user_id'
         }
     }, {
-        timestamps: false
+        timestamps: false,
+        freezeTableName: true
     });
     Address.associate = function(models) {
         // associations can be defined here
-        Address.belongsTo(models.Users, {
+        Address.belongsTo(models.User, {
             foreignKey: 'userId',
             constraints: true,
             onDelete: 'cascade'
