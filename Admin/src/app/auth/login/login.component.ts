@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
     console.log('LOGIN: ', this.loginForm.value)
     this.authService.login(this.loginForm.value).subscribe((result) => {
       console.log('Login Result', result)
+      localStorage.setItem('admin', JSON.stringify(result.data))
     })
   }
 

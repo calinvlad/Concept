@@ -9,14 +9,20 @@ import {TooltipModule} from "ngx-bootstrap";
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthService} from "./service/auth.service";
+import { ProductsComponent } from './dashboard/products/products.component';
+import { IndexComponent } from './dashboard/index/index.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProductsComponent,
+    IndexComponent
   ],
   imports: [
+    NgbModule,
     HttpClientModule,
     TooltipModule.forRoot(),
     BrowserModule,

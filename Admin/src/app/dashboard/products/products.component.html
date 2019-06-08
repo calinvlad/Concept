@@ -1,0 +1,62 @@
+<div class="row justify-content-center mt-5">
+  <div class="col col-6">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Category</th>
+        <th scope="col">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <th scope="row">{{ product.productId }}</th>
+          <td>
+            {{ product.name }}
+          </td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.category }}</td>
+          <td>
+            <tr>
+              <button class="btn btn-success btn-sm btn-block" (click)="editModal(content, product)">Edit</button>
+            </tr>
+            <tr>
+              <button class="btn btn-danger btn-sm btn-block" (click)="delete(product.productId)">Delete</button>
+            </tr>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!--Modal Edit Product-->
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editForm">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" formControlName="name">
+      </div>
+      <div class="form-group">
+        <label>Price</label>
+        <input type="text" class="form-control" formControlName="price">
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <input type="email" class="form-control" formControlName="category">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="edit(editForm); d('Cross click')">Save</button>
+  </div>
+</ng-template>
