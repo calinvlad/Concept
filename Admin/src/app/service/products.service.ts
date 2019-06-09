@@ -13,6 +13,20 @@ export class ProductsService {
     private http: HttpClient
   ) { }
 
+  createImage(data, product): Observable<any> {
+    console.log('DATA: ', data)
+    return this.http.post(`${this.server}/products/images?productId=${product}`, data)
+  }
+
+
+  deleteImage(data): Observable<any> {
+    return this.http.delete(`${this.server}/products/images?imageId=${data.imageId}&filePath=${data.image}`)
+  }
+
+  create(data): Observable<any> {
+    return this.http.post(`${this.server}/products/create?adminId=${this.adminId}`, data)
+  }
+
   list(): Observable<any> {
     return this.http.get(`${this.server}/products/list`)
   }

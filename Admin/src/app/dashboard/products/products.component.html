@@ -1,5 +1,8 @@
 <div class="row justify-content-center mt-5">
-  <div class="col col-6">
+  <div class="col col-10">
+    <button class="btn btn-primary btn-block" (click)="createModal(createcontent)">
+      Create Product
+    </button>
     <table class="table table-striped">
       <thead>
       <tr>
@@ -7,6 +10,7 @@
         <th scope="col">Name</th>
         <th scope="col">Price</th>
         <th scope="col">Category</th>
+        <th scope="col">Details</th>
         <th scope="col">Actions</th>
       </tr>
       </thead>
@@ -19,12 +23,23 @@
           <td>{{ product.price }}</td>
           <td>{{ product.category }}</td>
           <td>
-            <tr>
-              <button class="btn btn-success btn-sm btn-block" (click)="editModal(content, product)">Edit</button>
-            </tr>
-            <tr>
+            <div>
+              <button class="btn btn-success btn-sm btn-block" (click)="imageModal(imagecontent, product)">Images</button>
+            </div>
+            <div>
+              <button class="btn btn-light btn-sm btn-block" (click)="details(product.productId)">Details</button>
+            </div>
+            <div>
+              <button class="btn btn-info btn-sm btn-block" (click)="details(product.productId)">Specs</button>
+            </div>
+          </td>
+          <td>
+            <div>
               <button class="btn btn-danger btn-sm btn-block" (click)="delete(product.productId)">Delete</button>
-            </tr>
+            </div>
+            <div>
+              <button class="btn btn-success btn-sm btn-block" (click)="editModal(editcontent, product)">Edit</button>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -33,9 +48,9 @@
 </div>
 
 <!--Modal Edit Product-->
-<ng-template #content let-c="close" let-d="dismiss">
+<ng-template #editcontent let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
+    <h4 class="modal-title" id="modal-basic-title">Edit {{product.name}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -58,5 +73,68 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="edit(editForm); d('Cross click')">Save</button>
+  </div>
+</ng-template>
+
+
+<!--Modal Create Product-->
+<ng-template #createcontent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Create Product</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="createForm">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" formControlName="name">
+      </div>
+      <div class="form-group">
+        <label>Price</label>
+        <input type="text" class="form-control" formControlName="price">
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <input type="email" class="form-control" formControlName="category">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="create(createForm); d('Cross click')">Save</button>
+  </div>
+</ng-template>
+
+
+<!--Modal Product's Images-->
+<ng-template #imagecontent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Create Images images to</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="imageForm">
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="inputGroupFile04" (change)="onFileChange($event)" #fileInput>
+          <label class="custom-file-label" for="inputGroupFile04"> {{imageForm.value.image ? imageForm.value.image.name : 'Choose file'}}</label>
+        </div>
+        <div class="input-group-append">
+          <button *ngIf="imageForm.value.image !== null"
+                  class="btn btn-outline-secondary" (click)="createImage(imageForm, product); d('Cross click')">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="row mt-3">
+      <div class="col" *ngFor="let image of product.Images">
+        <img [src]="'http://localhost:8000/' + image.image" alt="..." class="img-thumbnail">
+        <button class="btn btn-danger btn-block btn-sm" (click)="deleteImage(image); d('Cross click')">Delete</button>
+      </div>
+    </div>
   </div>
 </ng-template>

@@ -66,7 +66,7 @@ module.exports = (app) => {
      * Create
      * Delete
      */
-    app.post('/products/images', upload.single('file'), ImageCtrl.create)
+    app.post('/products/images', upload.single('image'), ImageCtrl.create)
     app.delete('/products/images', ImageCtrl.delete)
 
     /**

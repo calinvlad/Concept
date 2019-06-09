@@ -3,7 +3,9 @@ const fs = require('fs')
 
 module.exports = {
     async create(req, res) {
-        await db.Images.create({
+        console.log('FILE: ', req.file)
+        console.log('PRODUCT: ', req.query)
+        await db.Image.create({
             productId: req.query.productId,
             image: req.file.filename
         })
@@ -15,7 +17,7 @@ module.exports = {
     async delete(req, res) {
         fs.unlink(`./uploads/${req.query.filePath}`, async (err) => {
             if(err) {res.status(400).send({success: false, message: 'File was not deleted', data: err})}
-            await db.Images.destroy({
+            await db.Image.destroy({
                 where: {
                     imageId: req.query.imageId
                 }

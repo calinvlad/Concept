@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ProductsService} from "../../service/products.service";
 import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -9,6 +9,7 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./products.component.sass'],
   providers: [NgbModalConfig, NgbModal]
 })
+
 export class ProductsComponent implements OnInit {
   products: {}
   product: {
@@ -16,12 +17,23 @@ export class ProductsComponent implements OnInit {
     name: string,
     category: string
   }
+  @ViewChild('fileInput') fileInput: ElementRef;
 
   editForm = new FormGroup( {
     name: new FormControl(''),
     price: new FormControl(''),
     category: new FormControl('')
   })
+
+  createForm = new FormGroup({
+    name: new FormControl(''),
+    price: new FormControl(''),
+    category: new FormControl('')
+  })
+
+  imageForm = new FormGroup({
+    image: new FormControl(null)
+  });
 
   constructor(
     private productsService: ProductsService,
@@ -35,12 +47,56 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.productsService.list().subscribe((result) => {
       this.products = result.data
+      console.log('Products: ', this.products)
     })
   }
 
-  editModal(content, productData) {
+  imageModal(imagecontent, productData) {
     this.product = productData
-    this.modalService.open(content)
+    this.imageForm.get('image').setValue(null);
+    this.modalService.open(imagecontent)
+  }
+
+  onFileChange(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0]
+      this.imageForm.get('image').setValue(file)
+    }
+  }
+
+  private prepareSave(): any {
+    const input = new FormData();
+    input.append('image', this.imageForm.get('image').value);
+    return input;
+  }
+
+  createImage(data, product) {
+    const formModel = this.prepareSave();
+    this.productsService.createImage(formModel, product.productId).subscribe(() => {
+      this.ngOnInit()
+    })
+  }
+
+  deleteImage(data) {
+    console.log('delete: ', data)
+    this.productsService.deleteImage(data).subscribe(() => {
+      this.ngOnInit()
+    })
+  }
+
+  createModal(createcontent) {
+    this.modalService.open(createcontent)
+  }
+
+  create(data) {
+    this.productsService.create(data.value).subscribe((result) => {
+      this.ngOnInit()
+    })
+  }
+
+  editModal(editcontent, productData) {
+    this.product = productData
+    this.modalService.open(editcontent)
 
     this.editForm = new FormGroup( {
       productId: new FormControl(`${productData.productId}`),
@@ -54,7 +110,6 @@ export class ProductsComponent implements OnInit {
     console.log(data)
     this.productsService.edit(data.value).subscribe(() => {
       this.ngOnInit()
-
     })
   }
 
