@@ -5,6 +5,7 @@ const ProductCtrl = require('./controller/ProductsCtrl')
 const OrdersCtrl = require('./controller/OrdersCtrl')
 const ImageCtrl = require('./controller/ImageCtrl')
 const SpecsCtrl = require('./controller/SpecsCtrl')
+const DetailCtrl = require('./controller/DetailCtrl')
 
 const multer = require('multer')
 const path = require('path')
@@ -77,6 +78,16 @@ module.exports = (app) => {
      */
 
     app.post('/products/specs', upload.none(), SpecsCtrl.create)
+
+    /**
+     * Details Routes
+     * Create
+     * Update
+     * Delete
+     */
+
+    app.post('/products/details', upload.none(), DetailCtrl.create)
+    app.delete('/products/details?detailId', DetailCtrl.delete)
 
     /**
      * Orders Routes:

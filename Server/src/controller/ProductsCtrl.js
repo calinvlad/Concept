@@ -22,6 +22,12 @@ module.exports = {
         await db.Product.findAll({
             include: [{
                 model: db.Image
+            },
+            {
+                model: db.Spec
+            },
+            {
+                model: db.Detail
             }]
         })
             .then(async (data) => {
