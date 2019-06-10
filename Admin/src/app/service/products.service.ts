@@ -13,8 +13,11 @@ export class ProductsService {
     private http: HttpClient
   ) { }
 
+  createDetail(data, product): Observable<any> {
+    return this.http.post(`${this.server}/products/details?productId=${product}&adminId=${this.adminId}`)
+  }
+
   createImage(data, product): Observable<any> {
-    console.log('DATA: ', data)
     return this.http.post(`${this.server}/products/images?productId=${product}`, data)
   }
 

@@ -33,7 +33,11 @@ export class ProductsComponent implements OnInit {
 
   imageForm = new FormGroup({
     image: new FormControl(null)
-  });
+  })
+
+  detailForm = new FormGroup({
+    text: new FormControl(null)
+  })
 
   constructor(
     private productsService: ProductsService,
@@ -49,6 +53,17 @@ export class ProductsComponent implements OnInit {
       this.products = result.data
       console.log('Products: ', this.products)
     })
+  }
+
+  detailModal(detailscontent, productData) {
+    this.product = productData
+    this.modalService.open(detailscontent)
+  }
+
+  detail(data, product) {
+    console.log('Detail: ', data)
+    this.productsService.createDetail({text: data}, product.productId).subscribe(() => {})
+      this.ngOnInit()
   }
 
   imageModal(imagecontent, productData) {

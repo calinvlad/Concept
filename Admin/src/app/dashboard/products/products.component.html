@@ -27,10 +27,10 @@
               <button class="btn btn-success btn-sm btn-block" (click)="imageModal(imagecontent, product)">Images</button>
             </div>
             <div>
-              <button class="btn btn-light btn-sm btn-block" (click)="details(product.productId)">Details</button>
+              <button class="btn btn-light btn-sm btn-block" (click)="detailModal(detailscontent, product)">Details</button>
             </div>
             <div>
-              <button class="btn btn-info btn-sm btn-block" (click)="details(product.productId)">Specs</button>
+              <button class="btn btn-info btn-sm btn-block" (click)="detai(product.productId)">Specs</button>
             </div>
           </td>
           <td>
@@ -110,7 +110,7 @@
 <!--Modal Product's Images-->
 <ng-template #imagecontent let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title">Create Images images to</h4>
+    <h4 class="modal-title">Create Images form {{product.name}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -136,5 +136,26 @@
         <button class="btn btn-danger btn-block btn-sm" (click)="deleteImage(image); d('Cross click')">Delete</button>
       </div>
     </div>
+  </div>
+</ng-template>
+
+<!--Details Modal-->
+<ng-template #detailscontent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Add details to {{product.name}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="detailForm">
+      <div class="form-group">
+        <label for="exampleFormControlTextarea3">Rounded corners</label>
+        <textarea class="form-control" id="exampleFormControlTextarea3" rows="7" formControlName="text"></textarea>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="detail(detailForm, product); d('Cross click')">Save</button>
   </div>
 </ng-template>
