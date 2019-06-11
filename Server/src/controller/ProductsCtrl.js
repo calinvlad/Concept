@@ -28,6 +28,9 @@ module.exports = {
             },
             {
                 model: db.Detail
+            },
+            {
+                model: db.Quantity
             }]
         })
             .then(async (data) => {

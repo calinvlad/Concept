@@ -86,3 +86,12 @@ CREATE TABLE custom.Order (
     FOREIGN KEY (admin_id)
         REFERENCES Admin(admin_id)
 ) Engine=InnoDB;
+
+CREATE TABLE custom.Quantity (
+    quantity_id INT(8) PRIMARY KEY AUTO_INCREMENT,
+    quantity INT NOT NULL DEFAULT 0.00,
+    product_id INT(8) UNIQUE NOT NULL
+    FOREIGN KEY (product_id)
+    REFERENCES Product(product_id)
+    ON DELETE CASCADE
+) Engine=InnoDB;
