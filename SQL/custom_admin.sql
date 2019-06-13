@@ -57,7 +57,7 @@ CREATE TABLE custom.Image (
     FOREIGN KEY (product_id)
         REFERENCES Product(product_id)
         ON DELETE CASCADE
-) Engine=InnoDB
+) Engine=InnoDB;
 
 CREATE TABLE custom.Detail (
   detail_id INT(8) PRIMARY KEY AUTO_INCREMENT,

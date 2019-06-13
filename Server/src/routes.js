@@ -7,24 +7,7 @@ const ImageCtrl = require('./controller/ImageCtrl')
 const SpecsCtrl = require('./controller/SpecsCtrl')
 const DetailCtrl = require('./controller/DetailCtrl')
 const Quantity = require('./controller/QuantityCtrl')
-
-const multer = require('multer')
-const path = require('path')
-const storage = multer.diskStorage({
-    destination: function(req, file, callback) {
-        callback(null, './uploads');
-    },
-
-    filename: function(req, file, callback) {
-        var fname = file.fieldname + '-' + Date.now() + path.extname(file.originalname);
-
-        callback(null, fname);
-
-    }
-});
-const upload = multer({
-    storage: storage
-})
+const uploadImageService = require('./services/uploadImageService')
 
 
 module.exports = (app) => {
@@ -68,7 +51,7 @@ module.exports = (app) => {
      * Create
      * Delete
      */
-    app.post('/products/images', upload.single('image'), ImageCtrl.create)
+    app.post('/products/images', uploadImageService.upload.array('image' , 5), ImageCtrl.create)
     app.delete('/products/images', ImageCtrl.delete)
 
     /**
@@ -78,7 +61,7 @@ module.exports = (app) => {
      * Delete
      */
 
-    app.post('/products/specs', upload.none(), SpecsCtrl.create)
+    app.post('/products/specs', uploadImageService.upload.none(), SpecsCtrl.create)
 
     /**
      * Details Routes
@@ -87,7 +70,7 @@ module.exports = (app) => {
      * Delete
      */
 
-    app.post('/products/details', upload.none(), DetailCtrl.create)
+    app.post('/products/details', uploadImageService.upload.none(), DetailCtrl.create)
     app.delete('/products/details', DetailCtrl.delete)
 
     /**

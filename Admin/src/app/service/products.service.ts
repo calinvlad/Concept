@@ -13,8 +13,14 @@ export class ProductsService {
     private http: HttpClient
   ) { }
 
+  editQuantity(data, product) {
+    console.log('data', data, 'p', product)
+    // return this.http.put(`${this.server}/products/quantity?productId=${product}`, data)
+    return this.http.post(`${this.server}/products/images?productId=${product}`, data)
+  }
+
   createDetail(data, product): Observable<any> {
-    return this.http.post(`${this.server}/products/details?productId=${product}&adminId=${this.adminId}`)
+    return this.http.post(`${this.server}/products/details?productId=${product}`, data)
   }
 
   createImage(data, product): Observable<any> {

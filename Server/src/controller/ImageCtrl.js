@@ -3,14 +3,14 @@ const fs = require('fs')
 
 module.exports = {
     async create(req, res) {
-        console.log('FILE: ', req.file)
-        console.log('PRODUCT: ', req.query)
-        await db.Image.create({
-            productId: req.query.productId,
-            image: req.file.filename
+        let images = []
+        req.files.forEach(file => {
+            images.push({image: file.filename, productId: req.query.productId})
         })
+        await db.Image.bulkCreate(images)
             .then((data) => {
-                res.status(200).send({success: true, message: 'Image was created successfully'})
+                if(data.length > 0) res.status(200).send({success: true, message: 'Images were created successfully', data: data})
+                if(data.length === 0 || !data) res.status(500).send({success: false, message: 'Internal server error'})
             })
             .catch(err => res.status(400).send({success: false, message: err}))
     },
@@ -22,7 +22,10 @@ module.exports = {
                     imageId: req.query.imageId
                 }
             })
-                .then(() => res.status(200).send({success: true, message: 'Image was deleted successfully'}))
+                .then((data) => {
+                    if(data === 0 && !data) return
+                    res.status(200).send({success: true, message: 'Image was deleted successfully'})
+                })
                 .catch(err => res.status(400).send({success: false, message: 'Image could not be deleted', data: err}))
         })
     }

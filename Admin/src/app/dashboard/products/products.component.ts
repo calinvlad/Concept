@@ -39,6 +39,12 @@ export class ProductsComponent implements OnInit {
     text: new FormControl(null)
   })
 
+  quantityForm = new FormGroup({
+    quantity: new FormControl(0),
+    more: new FormControl(false),
+    less: new FormControl(false)
+  })
+
   constructor(
     private productsService: ProductsService,
     config: NgbModalConfig,
@@ -55,15 +61,27 @@ export class ProductsComponent implements OnInit {
     })
   }
 
+  quantityModal(quantitycontent, productData) {
+    this.product = productData
+    this.modalService.open(quantitycontent)
+  }
+
+  // Bug
+  quantity(data, product) {
+    this.productsService.editQuantity(data, product.productId).subscribe((reult) => {
+      this.ngOnInit()
+    })
+  }
+
   detailModal(detailscontent, productData) {
     this.product = productData
     this.modalService.open(detailscontent)
   }
 
   detail(data, product) {
-    console.log('Detail: ', data)
-    this.productsService.createDetail({text: data}, product.productId).subscribe(() => {})
+    this.productsService.createDetail({text: data}, product.productId).subscribe(() => {
       this.ngOnInit()
+    })
   }
 
   imageModal(imagecontent, productData) {
