@@ -1,4 +1,5 @@
 const db = require('../../db/models')
+const moment = require('moment')
 
 /**
  * Create
@@ -13,10 +14,11 @@ module.exports = {
         }
         await db.Quantity.create({
             ...quantity,
-            productId: req.query.productId,
-
+            created: moment().format('YYYY/MM/DD HH:mm:ss'),
+            updated: moment().format('YYYY/MM/DD HH:mm:ss'),
+            productId: req.product,
         })
-            .then((data) => res.status(200).send({success: true, message: 'Quantity created successfully', data: data}))
+            .then((data) => res.status(200).send({success: true, message: 'Product was created successfully', data: data}))
             .catch(err => res.status(500).send({success: false, data: err}))
     },
 
@@ -37,9 +39,9 @@ module.exports = {
                 }
             })
 
-        console.log('VALUE********, ', value)
         await db.Quantity.update({
-            quantity: value
+            quantity: value,
+            updated: moment().format('YYYY/MM/DD HH:mm:ss')
         }, {
             where: {productId: req.query.productId}
         })

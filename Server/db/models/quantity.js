@@ -13,6 +13,16 @@ module.exports = (sequelize, DataTypes) => {
             default: 0.00,
             field: 'quantity'
         },
+        created: {
+            type: 'TIMESTAMP',
+            allowNull: false,
+            field: 'created',
+        },
+        updated: {
+            type: 'TIMESTAMP',
+            allowNull: false,
+            field: 'updated',
+        },
         productId: {
             type: DataTypes.INTEGER,
             allowNull: false,

@@ -42,7 +42,7 @@ module.exports = (app) => {
      * Delete
      */
 
-    app.post('/products/create', ProductCtrl.create)
+    app.post('/products/create', ProductCtrl.create, Quantity.create)
     app.get('/products/list', ProductCtrl.list)
     app.get('/products/:productId', view.createViewProduct, view.listViewsProduct, ProductCtrl.listById)
     app.put('/products/update/:productId', ProductCtrl.update)

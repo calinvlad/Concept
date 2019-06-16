@@ -2,7 +2,7 @@ const db = require('../../db/models')
 
 
 module.exports = {
-    async create(req, res) {
+    async create(req, res, next) {
         const admin = req.query.adminId
         const {name, category, price} = req.body
 
@@ -13,11 +13,10 @@ module.exports = {
             adminId: admin
         })
             .then((data) => {
-                res.status(200).send({success: true, message: 'Product was created successfully', data: data})
+                req.product = data.productId
+                next()
             })
             .catch(err => res.status(403).send({success: false, message: 'Product creation error', data: err}))
-
-        res.status(500).send({success: false, message: 'Internal server error'})
     },
     async list(req, res) {
         await db.Product.findAll({

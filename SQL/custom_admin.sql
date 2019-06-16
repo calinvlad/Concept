@@ -91,6 +91,8 @@ CREATE TABLE custom.Order (
 CREATE TABLE custom.Quantity (
     quantity_id INT(8) PRIMARY KEY AUTO_INCREMENT,
     quantity INT NOT NULL DEFAULT 0.00,
+    created DATETIME NOT NULL,
+    updated DATETIME NOT NULL,
     product_id INT(8) UNIQUE NOT NULL
     FOREIGN KEY (product_id)
     REFERENCES Product(product_id)

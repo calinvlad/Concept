@@ -5,8 +5,6 @@ const moment = require('moment')
 module.exports = {
     async createViewProduct(req, res, next) {
 
-        console.log('HERE')
-
         await db.View.create({
             productId: req.params.productId,
             view: 1,
@@ -17,7 +15,6 @@ module.exports = {
             .catch(err => res.status(500).send({success: false, message: 'Internal Server Error', data: err}))
     },
     async listViewsProduct(req, res, next) {
-        console.log('NOW HERE')
 
         await db.View.count({
             where: {
