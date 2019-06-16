@@ -1,15 +1,18 @@
 const db = require('../../db/models')
+const moment = require('moment')
 
 module.exports = {
     async create(req, res) {
         const user = req.query.userId
         const {products, total, address} = req.body
 
-        await db.Orders.create({
+        await db.Order.create({
             userId: user,
             products: JSON.stringify(products),
             total: total,
-            address: JSON.stringify(address)
+            address: JSON.stringify(address),
+            created: moment().format('YYYY/MM/DD HH:mm:ss'),
+            updated: moment().format('YYYY/MM/DD HH:mm:ss')
         })
             .then((data) => {
                 res.status(200).send({success: true, message: 'Your order was placed', data: data})
@@ -19,7 +22,7 @@ module.exports = {
             })
     },
     async list(req, res) {
-        await db.Orders.findAll()
+        await db.Order.findAll()
             .then((data) => {
                 res.status(200).send({success: true, message: 'Orders had been listed successfully', data: data})
             })
@@ -32,10 +35,11 @@ module.exports = {
         const user = req.query.userId
         const order = req.params.orderId
         const {products, total, address} = req.body
-        await db.Orders.update({
+        await db.Order.update({
             products: products,
             total: total,
-            address: address
+            address: address,
+            updated: moment().format('YYYY/MM/DD HH:mm:ss')
         }, {
             where: {
                 orderId: order,
@@ -51,7 +55,7 @@ module.exports = {
     },
     async delete(req, res) {
         const order = req.params.orderId
-        await db.Orders.destroy({
+        await db.Order.destroy({
             where: {
                 orderId: order
             }

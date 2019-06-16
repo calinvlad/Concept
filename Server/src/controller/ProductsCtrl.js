@@ -1,3 +1,4 @@
+const moment = require('moment')
 const db = require('../../db/models')
 
 
@@ -10,7 +11,9 @@ module.exports = {
             name: name,
             category: category,
             price: price,
-            adminId: admin
+            adminId: admin,
+            created: moment().format('YYYY/MM/DD HH:mm:ss'),
+            updated: moment().format('YYYY/MM/DD HH:mm:ss')
         })
             .then((data) => {
                 req.product = data.productId
@@ -20,18 +23,20 @@ module.exports = {
     },
     async list(req, res) {
         await db.Product.findAll({
-            include: [{
-                model: db.Image
-            },
-            {
-                model: db.Spec
-            },
-            {
-                model: db.Detail
-            },
-            {
-                model: db.Quantity
-            }]
+            include: [
+                {
+                    model: db.Image
+                },
+                {
+                    model: db.Spec
+                },
+                {
+                    model: db.Detail
+                },
+                {
+                    model: db.Quantity
+                }
+            ]
         })
             .then(async (data) => {
                 res.status(200).send({success: true, message: '', data: data})
@@ -44,7 +49,8 @@ module.exports = {
         await db.Product.update({
             name: name,
             category: category,
-            price: price
+            price: price,
+            updated: moment().format('YYYY/MM/DD HH:mm:ss')
         },{
             where: {
                 productId: productId
@@ -68,8 +74,6 @@ module.exports = {
             .catch(err => res.status(500).send({success: false, message: `Product could not be deleted`}))
     },
     async listById(req, res) {
-
-        console.log('THERE***********', req.views)
 
         await db.Product.findOne({
             where: {

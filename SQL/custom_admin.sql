@@ -47,6 +47,8 @@ CREATE TABLE custom.Product (
   category VARCHAR(60) NOT NULL,
   price VARCHAR(20) NOT NULL,
   admin_id INT NOT NULL,
+  created DATETIME NOT NULL,
+  updated DATETIME NOT NULL,
   FOREIGN KEY (admin_id)
     REFERENCES Admin(admin_id)
 ) Engine=InnoDB;
@@ -81,11 +83,13 @@ CREATE TABLE custom.Spec (
 CREATE TABLE custom.Order (
     order_id INT(8) PRIMARY KEY AUTO_INCREMENT,
     products TEXT NOT NULL,
-    admin_id INT NOT NULL,
+    user_id INT NOT NULL,
     total VARCHAR(255),
     address TEXT,
-    FOREIGN KEY (admin_id)
-        REFERENCES Admin(admin_id)
+    created DATETIME NOT NULL,
+    updated DATETIME NOT NULL,
+    FOREIGN KEY (user_id)
+        REFERENCES User(user_id)
 ) Engine=InnoDB;
 
 CREATE TABLE custom.Quantity (
@@ -93,10 +97,10 @@ CREATE TABLE custom.Quantity (
     quantity INT NOT NULL DEFAULT 0.00,
     created DATETIME NOT NULL,
     updated DATETIME NOT NULL,
-    product_id INT(8) UNIQUE NOT NULL
+    product_id INT(8) UNIQUE NOT NULL,
     FOREIGN KEY (product_id)
-    REFERENCES Product(product_id)
-    ON DELETE CASCADE
+        REFERENCES Product(product_id)
+        ON DELETE CASCADE
 ) Engine=InnoDB;
 
 CREATE TABLE custom.View (

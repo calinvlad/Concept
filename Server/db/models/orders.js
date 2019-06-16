@@ -27,6 +27,16 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true,
             field: 'address'
+        },
+        created: {
+            type: 'TIMESTAMP',
+            allowNull: false,
+            field: 'created',
+        },
+        updated: {
+            type: 'TIMESTAMP',
+            allowNull: false,
+            field: 'updated',
         }
     }, {
         timestamps: false,

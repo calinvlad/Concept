@@ -27,6 +27,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       field: 'admin_id'
+    },
+    created: {
+      type: 'TIMESTAMP',
+      allowNull: false,
+      field: 'created',
+    },
+    updated: {
+      type: 'TIMESTAMP',
+      allowNull: false,
+      field: 'updated',
     }
   }, {
     timestamps: false,

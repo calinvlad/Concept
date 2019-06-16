@@ -14,7 +14,7 @@ module.exports = {
         let errAddress, address
         let err, user
         const {address1, address2, city} = req.body
-        await db.Users.create({
+        await db.User.create({
             fname: req.body.fname,
             lname: req.body.lname,
             email: req.body.email,
@@ -49,7 +49,7 @@ module.exports = {
 
     async login(req, res) {
         let user;
-        await db.Users.findOne({
+        await db.User.findOne({
             where: {
                 email: req.body.email
             }
