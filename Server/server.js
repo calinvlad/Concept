@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const {sequelize} = require('./db/models')
 const cors = require('cors')
 const morgan = require('morgan')
-const passport = require('passport')
+// const passport = require('passport')
 const config = require('./config')
 
 const app = express()

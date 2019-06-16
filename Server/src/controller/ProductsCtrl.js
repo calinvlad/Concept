@@ -1,5 +1,6 @@
 const db = require('../../db/models')
 
+
 module.exports = {
     async create(req, res) {
         const admin = req.query.adminId
@@ -68,18 +69,24 @@ module.exports = {
             .catch(err => res.status(500).send({success: false, message: `Product could not be deleted`}))
     },
     async listById(req, res) {
+
+        console.log('THERE***********', req.views)
+
         await db.Product.findOne({
             where: {
                 productId: req.params.productId
             },
             include: [{
-                model: db.Images
+                model: db.Image
             },{
-                model: db.Specs
+                model: db.Spec
             }]
         })
-            .then((data) => {
-                res.status(200).send({success: true, message: 'Fetching product went fine', data: data})
+            .then((product) => {
+                const data = {product, views: req.views, uniqueViews: req.uniqueViews}
+                res
+                    .status(200)
+                    .send({success: true, message: 'Fetching product went fine', data: data})
             })
             .catch(err => res.status(400).send({success: false, message: 'Product could not be fetched', data: err}))
     }

@@ -1,6 +1,7 @@
 DROP DATABASE IF EXISTS custom;
 CREATE DATABASE custom;
 
+DROP TABLE IF EXISTS custom.View;
 DROP TABLE IF EXISTS custom.Image;
 DROP TABLE IF EXISTS custom.Order;
 DROP TABLE IF EXISTS custom.Detail;
@@ -94,4 +95,15 @@ CREATE TABLE custom.Quantity (
     FOREIGN KEY (product_id)
     REFERENCES Product(product_id)
     ON DELETE CASCADE
+) Engine=InnoDB;
+
+CREATE TABLE custom.View (
+    view_id INT(8) PRIMARY KEY AUTO_INCREMENT,
+    ip VARCHAR(255) NOT NULL,
+    view INT NOT NULL,
+    created DATETIME NOT NULL,
+    product_id INT,
+    FOREIGN KEY (product_id)
+        REFERENCES Product(product_id)
+        ON DELETE CASCADE
 ) Engine=InnoDB;

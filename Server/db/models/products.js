@@ -50,6 +50,9 @@ module.exports = (sequelize, DataTypes) => {
     Product.hasMany(models.Detail, {
       foreignKey: 'productId'
     })
+    Product.hasMany(models.View, {
+      foreignKey: 'productId'
+    })
   };
   return Product;
 };

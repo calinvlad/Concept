@@ -1,4 +1,6 @@
 const checkAuth = require('./middleware/checkAuthentication')
+const view = require('./middleware/views')
+
 const AdminCtrl = require('./controller/AdminCtrl')
 const AuthCtrl = require('./controller/AuthCtrl')
 const ProductCtrl = require('./controller/ProductsCtrl')
@@ -42,7 +44,7 @@ module.exports = (app) => {
 
     app.post('/products/create', ProductCtrl.create)
     app.get('/products/list', ProductCtrl.list)
-    app.get('/products/:productId', ProductCtrl.listById)
+    app.get('/products/:productId', view.createViewProduct, view.listViewsProduct, ProductCtrl.listById)
     app.put('/products/update/:productId', ProductCtrl.update)
     app.delete('/products/delete/:productId', ProductCtrl.delete)
 
