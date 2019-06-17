@@ -1,12 +1,12 @@
 {
-  "home": {
+  "development": {
     "username": "vlad",
     "password": "1q2w3e",
     "database": "custom",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
-  "development": {
+  "office": {
     "username": "calin",
     "password": "1q2w3e4r",
     "database": "custom",

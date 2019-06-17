@@ -1,11 +1,35 @@
 const checkAuth = require('./middleware/checkAuthentication')
 const view = require('./middleware/views')
 
-const AdminCtrl = require('./controller/AdminCtrl')
-const AuthCtrl = require('./controller/AuthCtrl')
-const ProductCtrl = require('./controller/ProductsCtrl')
-const OrdersCtrl = require('./controller/OrdersCtrl')
-const ImageCtrl = require('./controller/ImageCtrl')
+// Admin
+const AdminCtrlRegister = require('./controller/admin/register')
+const AdminCtrlLogin = require('./controller/admin/login')
+
+// User
+const AuthCtrlRegister = require('./controller/user/register')
+const AuthCtrlLogin = require('./controller/user/login')
+
+// Product
+const ProductCtrlRead = require('./controller/product/read')
+const ProductCtrlCreate = require('./controller/product/create')
+const ProductCtrlUpdate = require('./controller/product/update')
+const ProductCtrlDelete = require('./controller/product/delete')
+
+// Quantity
+const QuantityCtrlCreate = require('./controller/quantity/create')
+const QuantityCtrlUpdate = require('./controller/quantity/update')
+
+// Image
+const ImageCtrlCreate = require('./controller/image/create')
+const ImageCtrlDelete = require('./controller/image/delete')
+
+// Order
+const OrdersCtrlCreate = require('./controller/order/create')
+const OrdersCtrlRead = require('./controller/order/read')
+const OrdersCtrlUpdate = require('./controller/order/update')
+const OrdersCtrlDelete = require('./controller/order/delete')
+
+
 const SpecsCtrl = require('./controller/SpecsCtrl')
 const DetailCtrl = require('./controller/DetailCtrl')
 const Quantity = require('./controller/QuantityCtrl')
@@ -14,86 +38,40 @@ const uploadImageService = require('./services/uploadImageService')
 
 module.exports = (app) => {
 
-    /**
-     * Admin Routes:
-     * Register
-     * Login
-     */
+    // Admin
+    app.post('/auth/admin/register', AdminCtrlRegister.register)
+    app.post('/auth/admin/login', AdminCtrlLogin.login)
 
-    app.post('/auth/admin/register', AdminCtrl.register)
-    app.post('/auth/admin/login', AdminCtrl.login)
+    // User
+    // ToDo: Forgot && Reset Password
+    app.post('/auth/register', AuthCtrlRegister.register)
+    app.post('/auth/login', AuthCtrlLogin.login)
 
-    /**
-     * Authentication Routes:
-     * Register
-     * Login
-     * Forgot
-     * Reset
-     */
-    //ToDo: Forgot && Reset Password
-    app.post('/auth/register', AuthCtrl.register)
-    app.post('/auth/login', AuthCtrl.login)
+    // Product
+    app.post('/products/create', ProductCtrlCreate.create, QuantityCtrlCreate.create)
+    app.get('/products/list', ProductCtrlRead.list)
+    app.get('/products/:productId', view.createViewProduct, view.listViewsProduct, ProductCtrlRead.listById)
+    app.put('/products/update/:productId', ProductCtrlUpdate.update)
+    app.delete('/products/delete/:productId', ProductCtrlDelete.imagesFromFileSystem, ProductCtrlDelete.delete)
 
-    /**
-     * Products Routes:
-     * Create
-     * Read
-     * Update
-     * Delete
-     */
+    // Quantity
+    app.post('/products/quantity', QuantityCtrlCreate.create)
+    app.put('/products/quantity', QuantityCtrlUpdate.update)
 
-    app.post('/products/create', ProductCtrl.create, Quantity.create)
-    app.get('/products/list', ProductCtrl.list)
-    app.get('/products/:productId', view.createViewProduct, view.listViewsProduct, ProductCtrl.listById)
-    app.put('/products/update/:productId', ProductCtrl.update)
-    app.delete('/products/delete/:productId', ProductCtrl.delete)
+    // Image
+    app.post('/products/images', uploadImageService.upload.array('image' , 5), ImageCtrlCreate.create)
+    app.delete('/products/images', ImageCtrlDelete.delete)
 
-    /**
-     * Images Routes
-     * Create
-     * Delete
-     */
-    app.post('/products/images', uploadImageService.upload.array('image' , 5), ImageCtrl.create)
-    app.delete('/products/images', ImageCtrl.delete)
-
-    /**
-     * Specs Routes
-     * Create
-     * Update
-     * Delete
-     */
-
+    // Spec
     app.post('/products/specs', uploadImageService.upload.none(), SpecsCtrl.create)
 
-    /**
-     * Details Routes
-     * Create
-     * Update
-     * Delete
-     */
-
+    // Detail
     app.post('/products/details', uploadImageService.upload.none(), DetailCtrl.create)
     app.delete('/products/details', DetailCtrl.delete)
 
-    /**
-     * Quantity Routes
-     * Create
-     * Update
-     */
-
-    app.post('/products/quantity', Quantity.create)
-    app.put('/products/quantity', Quantity.update)
-
-    /**
-     * Orders Routes:
-     * Create
-     * Read
-     * Update
-     * Delete
-     */
-
-    app.post('/orders/create', OrdersCtrl.create)
-    app.get('/orders/list', OrdersCtrl.list)
-    app.put('/orders/update/:orderId', OrdersCtrl.update)
-    app.delete('/orders/delete/:orderId', OrdersCtrl.delete)
+    // Order
+    app.post('/orders/create', OrdersCtrlCreate.create)
+    app.get('/orders/list', OrdersCtrlRead.list)
+    app.put('/orders/update/:orderId', OrdersCtrlUpdate.update)
+    app.delete('/orders/delete/:orderId', OrdersCtrlDelete.delete)
 }
