@@ -1,10 +1,11 @@
+
 const db = require('../../../db/models')
 const moment = require('moment')
+const {success200, error500, error404} = require('../../helpers/response')
 
 module.exports = {
     async update(req, res) {
         let value
-        console.log('QUERY', req.query.productId)
         await db.Quantity.findOne({
             where: {
                 productId: req.query.productId
@@ -12,15 +13,13 @@ module.exports = {
         })
             .then((data) => {
                 if(req.body.more) {
-                    console.log('DATA***', data.quantity + ' ' + data.productId)
-                    console.log('Quantity***', req.body.quantity)
                     value = data.quantity + req.body.quantity
-                    console.log('VALUE***', value)
                 }
                 if(req.body.less) {
                     value = data.quantity - req.body.quantity < 0 ? 0 : data.quantity - req.body.quantity
                 }
             })
+            .catch(err => error404(res, err))
 
         await db.Quantity.update({
             quantity: value,
@@ -28,7 +27,7 @@ module.exports = {
         }, {
             where: {productId: req.query.productId}
         })
-            .then((data) => res.status(200).send({success: true, message: 'Quantity updated successful', data: data}))
-            .catch(err => res.status(500).send({success: false, message: 'Internal server error', data: err}))
+            .then((data) => success200(res, data))
+            .catch(err => error500(res, err))
     }
 }

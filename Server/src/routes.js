@@ -23,6 +23,10 @@ const QuantityCtrlUpdate = require('./controller/quantity/update')
 const ImageCtrlCreate = require('./controller/image/create')
 const ImageCtrlDelete = require('./controller/image/delete')
 
+// Detail
+const DetailCtrlCreate = require('./controller/detail/create')
+const DetailCtrlUpdate = require('./controller/detail/update')
+
 // Order
 const OrdersCtrlCreate = require('./controller/order/create')
 const OrdersCtrlRead = require('./controller/order/read')
@@ -30,9 +34,6 @@ const OrdersCtrlUpdate = require('./controller/order/update')
 const OrdersCtrlDelete = require('./controller/order/delete')
 
 
-const SpecsCtrl = require('./controller/SpecsCtrl')
-const DetailCtrl = require('./controller/DetailCtrl')
-const Quantity = require('./controller/QuantityCtrl')
 const uploadImageService = require('./services/uploadImageService')
 
 
@@ -48,7 +49,7 @@ module.exports = (app) => {
     app.post('/auth/login', AuthCtrlLogin.login)
 
     // Product
-    app.post('/products/create', ProductCtrlCreate.create, QuantityCtrlCreate.create)
+    app.post('/products/create', ProductCtrlCreate.create, QuantityCtrlCreate.create, DetailCtrlCreate.create)
     app.get('/products/list', ProductCtrlRead.list)
     app.get('/products/:productId', view.createViewProduct, view.listViewsProduct, ProductCtrlRead.listById)
     app.put('/products/update/:productId', ProductCtrlUpdate.update)
@@ -62,12 +63,8 @@ module.exports = (app) => {
     app.post('/products/images', uploadImageService.upload.array('image' , 5), ImageCtrlCreate.create)
     app.delete('/products/images', ImageCtrlDelete.delete)
 
-    // Spec
-    app.post('/products/specs', uploadImageService.upload.none(), SpecsCtrl.create)
-
     // Detail
-    app.post('/products/details', uploadImageService.upload.none(), DetailCtrl.create)
-    app.delete('/products/details', DetailCtrl.delete)
+    app.put('/products/details/:detailId', DetailCtrlUpdate.update)
 
     // Order
     app.post('/orders/create', OrdersCtrlCreate.create)

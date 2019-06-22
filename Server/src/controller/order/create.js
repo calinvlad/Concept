@@ -1,5 +1,6 @@
 const db = require('../../../db/models')
 const moment = require('moment')
+const{success200, error500} = require('../../helpers/response')
 
 module.exports = {
     async create(req, res) {
@@ -15,10 +16,8 @@ module.exports = {
             updated: moment().format('YYYY/MM/DD HH:mm:ss')
         })
             .then((data) => {
-                res.status(200).send({success: true, message: 'Your order was placed', data: data})
+                success200(res, data)
             })
-            .catch(err => {
-                res.status(400).send({success: false, message: 'Your order was not placed', data: err})
-            })
+            .catch(err => error500(res, err))
     }
 }

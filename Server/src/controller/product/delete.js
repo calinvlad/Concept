@@ -1,5 +1,6 @@
 const db = require('../../../db/models')
 const fs = require('fs')
+const {success200, error500, error404} = require('../../helpers/response')
 
 module.exports = {
     async delete(req, res, next) {
@@ -13,14 +14,14 @@ module.exports = {
         })
             .then((data) => {
                 if(data === 0) {
-                    res.status(400).send({success: false, message: `There is no matching product to delete`})
+                    error404(res, data)
                 }
                 if(data !== 0) {
-                    res.status(200).send({success: true, message: `Product was deleted successfully`})
+                    success200(res, data)
                 }
 
             })
-            .catch(err => res.status(500).send({success: false, message: `Product could not be deleted`}))
+            .catch(err => error500(res, err))
     },
     async imagesFromFileSystem(req, res, next) {
         await db.Image.findAll({
@@ -45,6 +46,6 @@ module.exports = {
                 next()
 
             })
-            .catch(err => res.status(500).send({success: false, message: `No images`}))
+            .catch(err => error500(res, data))
     }
 }

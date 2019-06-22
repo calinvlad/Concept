@@ -1,8 +1,9 @@
 const db = require('../../../db/models')
 const moment = require('moment')
+const {success200, error500} = require('../../helpers/response')
 
 module.exports = {
-    async create(req, res) {
+    async create(req, res, next) {
         let quantity = {}
         if(req.body.quantity) {
             quantity = {quantity: req.body.quantity}
@@ -13,7 +14,11 @@ module.exports = {
             updated: moment().format('YYYY/MM/DD HH:mm:ss'),
             productId: req.product,
         })
-            .then((data) => res.status(200).send({success: true, message: 'Product was created successfully', data: data}))
-            .catch(err => res.status(500).send({success: false, data: err}))
+            .then((data) => {
+                next()
+            })
+            .catch(err => {
+                error500(res, err)
+            })
     }
 }

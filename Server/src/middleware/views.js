@@ -1,6 +1,7 @@
 const requestIp = require('request-ip');
 const db = require('../../db/models');
 const moment = require('moment')
+const {error500} = require('../helpers/response')
 
 module.exports = {
     async createViewProduct(req, res, next) {
@@ -12,7 +13,7 @@ module.exports = {
             created: moment().format('YYYY/MM/DD HH:mm:ss')
         })
             .then(() => next())
-            .catch(err => res.status(500).send({success: false, message: 'Internal Server Error', data: err}))
+            .catch(err => error500(res, err))
     },
     async listViewsProduct(req, res, next) {
 
@@ -24,7 +25,7 @@ module.exports = {
             .then((views) => {
                 req.views = views
             })
-            .catch(err => res.status(500).send({success: false, message: 'Internal Server Error', data: err}))
+            .catch(err => error500(res, err))
 
         await db.View.count({
             where: {productId: req.params.productId},
@@ -34,6 +35,6 @@ module.exports = {
                 req.uniqueViews = unique.length
                 next()
             })
-            .catch(err => res.status(500).send({success: false, message: 'Internal Server Error', data: err}))
+            .catch(err => error500(res, err))
     }
 }

@@ -1,4 +1,5 @@
 const db = require('../../../db/models')
+const {success200, error500} = require('../../helpers/response')
 
 module.exports = {
     async list(req, res) {
@@ -18,10 +19,10 @@ module.exports = {
                 }
             ]
         })
-            .then(async (data) => {
-                res.status(200).send({success: true, message: '', data: data})
+            .then((data) => {
+                success200(res, data)
             })
-            .catch(err => res.status(500).send({success: false, message: 'Internal server error'}))
+            .catch(err => error500(res, err))
     },
     async listById(req, res) {
 
@@ -39,10 +40,8 @@ module.exports = {
         })
             .then((product) => {
                 const data = {product, views: req.views, uniqueViews: req.uniqueViews}
-                res
-                    .status(200)
-                    .send({success: true, message: 'Fetching product went fine', data: data})
+                success200(res, data)
             })
-            .catch(err => res.status(400).send({success: false, message: 'product could not be fetched', data: err}))
+            .catch(err => error500(res, err))
     }
 }

@@ -1,5 +1,6 @@
 const moment = require('moment')
 const db = require('../../../db/models')
+const {error500} = require('../../helpers/response')
 
 module.exports = {
     async create(req, res, next) {
@@ -18,6 +19,7 @@ module.exports = {
                 req.product = data.productId
                 next()
             })
-            .catch(err => res.status(403).send({success: false, message: 'product creation error', data: err}))
+            // .catch(err => res.status(403).send({success: false, message: 'product creation error', data: err}))
+            .catch(err => error500(res, err))
     },
 }
