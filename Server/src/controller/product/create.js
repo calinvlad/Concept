@@ -6,6 +6,7 @@ module.exports = {
     async create(req, res, next) {
         const admin = req.query.adminId
         const {name, category, price} = req.body
+        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
         await db.Product.create({
             name: name,

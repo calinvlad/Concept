@@ -15,6 +15,18 @@ const ProductCtrlCreate = require('./controller/product/create')
 const ProductCtrlUpdate = require('./controller/product/update')
 const ProductCtrlDelete = require('./controller/product/delete')
 
+// Category
+const CategoryCtrlCreate = require('./controller/category/create')
+const CategoryCtrlRead = require('./controller/category/read')
+const CategoryCtrlUpdate = require('./controller/category/update')
+const CategoryCtrlDelete = require('./controller/category/delete')
+
+// Subcategory
+const SubcategoryCtrlCreate = require('./controller/subcategory/create')
+const SubcategoryCtrlRead = require('./controller/subcategory/read')
+const SubcategoryCtrlUpdate = require('./controller/subcategory/update')
+const SubcategoryCtrlDelete = require('./controller/subcategory/delete')
+
 // Quantity
 const QuantityCtrlCreate = require('./controller/quantity/create')
 const QuantityCtrlUpdate = require('./controller/quantity/update')
@@ -54,6 +66,18 @@ module.exports = (app) => {
     app.get('/products/:productId', view.createViewProduct, view.listViewsProduct, ProductCtrlRead.listById)
     app.put('/products/update/:productId', ProductCtrlUpdate.update)
     app.delete('/products/delete/:productId', ProductCtrlDelete.imagesFromFileSystem, ProductCtrlDelete.delete)
+
+    // Category
+    app.post('/category', CategoryCtrlCreate.index)
+    app.get('/category', CategoryCtrlRead.index)
+    app.put('/category', CategoryCtrlUpdate.index)
+    app.delete('/category', CategoryCtrlDelete.index)
+
+    //Subcategory
+    app.post('/subcategory', SubcategoryCtrlCreate.index)
+    app.get('/subcategory', SubcategoryCtrlRead.index)
+    app.put('/subcategory', SubcategoryCtrlUpdate.index)
+    app.delete('/subcategory', SubcategoryCtrlDelete.index)
 
     // Quantity
     app.post('/products/quantity', QuantityCtrlCreate.create)

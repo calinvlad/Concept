@@ -8,6 +8,7 @@ module.exports = {
         if(req.body.quantity) {
             quantity = {quantity: req.body.quantity}
         }
+        console.log('HELOOOOOOOOOOO', req.productId)
         await db.Quantity.create({
             ...quantity,
             created: moment().format('YYYY/MM/DD HH:mm:ss'),

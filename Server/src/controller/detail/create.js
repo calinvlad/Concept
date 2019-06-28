@@ -10,7 +10,7 @@ module.exports = {
             productId: req.product,
             text: text
         })
-            .then((data) => success200(res, data))
+            .then((data) => success200(res))
             .catch(err => error500(res, err))
     }
 }
