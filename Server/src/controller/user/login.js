@@ -2,6 +2,7 @@ const db = require('../../../db/models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('../../../config')
+const{error500, error400} = require('../../helpers/response')
 
 function jwtSignUser (user) {
     return jwt.sign(user, config.authentication.jwtSecret, {
@@ -10,7 +11,7 @@ function jwtSignUser (user) {
 }
 
 module.exports = {
-    async login(req, res) {
+    async login(req, res, next) {
         let user;
         await db.User.findOne({
             where: {
@@ -22,24 +23,16 @@ module.exports = {
                 bcrypt.compare(req.body.pass, data.pass)
                     .then(async (data) => {
                         if(data){
-
-                            await db.Address.findOne({where: {userId: user.userId}})
-                                .then(data => {
-                                    res.status(200).send({
-                                        success: true,
-                                        message: `Welcome ${user.fname}`,
-                                        data: user,
-                                        address: data,
-                                        token: jwtSignUser(user.toJSON())
-                                    })
-                                })
+                            req.user = user
+                            req.token = jwtSignUser(user.toJSON())
+                            next()
                         }
                         else {
-                            res.status(403).send({success: false, message: 'Oops, your email or password does not match'})
+                            error400(res)
                         }
                     })
-                    .catch(err => {res.status(403).send({success: false, message: 'Oops, your email or password does not match'})})
+                    .catch(err => error400(res))
             })
-            .catch(err => res.status(500).send({success: false, message: 'Internal server error'}))
+            .catch(err => error500(res, err))
     }
 }

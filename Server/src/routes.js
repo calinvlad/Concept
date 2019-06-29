@@ -9,6 +9,10 @@ const AdminCtrlLogin = require('./controller/admin/login')
 const AuthCtrlRegister = require('./controller/user/register')
 const AuthCtrlLogin = require('./controller/user/login')
 
+// Address
+const AddressCtrlCreate = require('./controller/address/create')
+const AddressCrtlRead = require('./controller/address/read')
+
 // Product
 const ProductCtrlRead = require('./controller/product/read')
 const ProductCtrlCreate = require('./controller/product/create')
@@ -45,6 +49,9 @@ const OrdersCtrlRead = require('./controller/order/read')
 const OrdersCtrlUpdate = require('./controller/order/update')
 const OrdersCtrlDelete = require('./controller/order/delete')
 
+// Response Success
+const Success = require('./helpers/response')
+
 
 const uploadImageService = require('./services/uploadImageService')
 
@@ -52,20 +59,36 @@ const uploadImageService = require('./services/uploadImageService')
 module.exports = (app) => {
 
     // Admin
-    app.post('/auth/admin/register', AdminCtrlRegister.register)
-    app.post('/auth/admin/login', AdminCtrlLogin.login)
+    app.post('/auth/admin/register', AdminCtrlRegister.register, Success.index)
+    app.post('/auth/admin/login', AdminCtrlLogin.login, Success.index)
 
     // User
     // ToDo: Forgot && Reset Password
-    app.post('/auth/register', AuthCtrlRegister.register)
-    app.post('/auth/login', AuthCtrlLogin.login)
+    app.post('/auth/register', AuthCtrlRegister.register, AddressCtrlCreate.onRegister, Success.index)
+    app.post('/auth/login', AuthCtrlLogin.login, AddressCrtlRead.onLogin, Success.index)
 
     // Product
-    app.post('/products/create', ProductCtrlCreate.create, QuantityCtrlCreate.create, DetailCtrlCreate.create)
-    app.get('/products/list', ProductCtrlRead.list)
+    app.post('/products/create',
+        CategoryCtrlRead.onProduct,
+        SubcategoryCtrlRead.onProduct,
+        ProductCtrlCreate.index,
+        QuantityCtrlCreate.index,
+        DetailCtrlCreate.index,
+        Success.index)
+    app.get('/products/list', ProductCtrlRead.index)
     app.get('/products/:productId', view.createViewProduct, view.listViewsProduct, ProductCtrlRead.listById)
-    app.put('/products/update/:productId', ProductCtrlUpdate.update)
-    app.delete('/products/delete/:productId', ProductCtrlDelete.imagesFromFileSystem, ProductCtrlDelete.delete)
+    app.put('/products/update/:productId',
+        CategoryCtrlRead.onProduct,
+        SubcategoryCtrlRead.onProduct,
+        ProductCtrlUpdate.update,
+        QuantityCtrlUpdate.index,
+        //ToDo: Am ramas la Detail update
+        // DetailCtrlUpdate.index,
+        Success.index)
+    app.delete('/products/delete/:productId',
+        ProductCtrlDelete.imagesFromFileSystem,
+        ProductCtrlDelete.delete,
+        Success.index)
 
     // Category
     app.post('/category', CategoryCtrlCreate.index)
@@ -80,8 +103,8 @@ module.exports = (app) => {
     app.delete('/subcategory', SubcategoryCtrlDelete.index)
 
     // Quantity
-    app.post('/products/quantity', QuantityCtrlCreate.create)
-    app.put('/products/quantity', QuantityCtrlUpdate.update)
+    app.post('/products/quantity', QuantityCtrlCreate.index)
+    app.put('/products/quantity', QuantityCtrlUpdate.index)
 
     // Image
     app.post('/products/images', uploadImageService.upload.array('image' , 5), ImageCtrlCreate.create)

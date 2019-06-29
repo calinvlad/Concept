@@ -1,6 +1,8 @@
 DROP DATABASE IF EXISTS custom;
 CREATE DATABASE custom;
 
+DROP TABLE IF EXISTS custom.Category;
+DROP TABLE IF EXISTS custom.Subcategory;
 DROP TABLE IF EXISTS custom.View;
 DROP TABLE IF EXISTS custom.Image;
 DROP TABLE IF EXISTS custom.Order;
@@ -26,7 +28,7 @@ CREATE TABLE custom.User (
   fname VARCHAR(60) NOT NULL,
   lname VARCHAR(60) NOT NULL,
   email VARCHAR(60) NOT NULL UNIQUE,
-  phone VARCHAR(20) UNIQUE,
+  phone VARCHAR(20) NOT NULL UNIQUE,
   pass  VARCHAR(60) NOT NULL
 ) ENGINE=InnoDB;
 
@@ -113,3 +115,18 @@ CREATE TABLE custom.View (
         REFERENCES Product(product_id)
         ON DELETE CASCADE
 ) Engine=InnoDB;
+
+CREATE TABLE custom.Category (
+    category_id int(8) UNIQUE AUTO_INCREMENT,
+    name varchar(150) PRIMARY KEY NOT NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE custom.Subcategory (
+    subcategory_id INT(8) UNIQUE NOT NULL AUTO_INCREMENT,
+    name VARCHAR(150) NOT NULL,
+    category_name VARCHAR(150) NOT NULL,
+    FOREIGN KEY (category_name)
+        REFERENCES Category(name)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+) ENGINE=InnoDB;

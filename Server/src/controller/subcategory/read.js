@@ -6,5 +6,8 @@ module.exports = {
         await db.Subcategory.findAll()
             .then(data => success200(res, data))
             .catch(err => error500(res, err))
+    },
+    async onProduct(req, res, next) {
+        next()
     }
 }

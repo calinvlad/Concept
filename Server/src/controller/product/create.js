@@ -3,14 +3,14 @@ const db = require('../../../db/models')
 const {error500} = require('../../helpers/response')
 
 module.exports = {
-    async create(req, res, next) {
+    async index(req, res, next) {
         const admin = req.query.adminId
-        const {name, category, price} = req.body
-        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        const {name, price} = req.body
+        const category = req.category
 
         await db.Product.create({
             name: name,
-            category: category,
+            category: category.name,
             price: price,
             adminId: admin,
             created: moment().format('YYYY/MM/DD HH:mm:ss'),

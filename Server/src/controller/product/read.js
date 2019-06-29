@@ -2,7 +2,7 @@ const db = require('../../../db/models')
 const {success200, error500} = require('../../helpers/response')
 
 module.exports = {
-    async list(req, res) {
+    async index(req, res) {
         await db.Product.findAll({
             include: [
                 {

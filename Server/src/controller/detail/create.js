@@ -2,7 +2,7 @@ const db = require('../../../db/models')
 const{success200, error500} = require('../../helpers/response')
 
 module.exports = {
-    async create(req, res) {
+    async index(req, res, next) {
         let text = req.body.text ? req.body.text : ''
 
         await db.Detail.create({
@@ -10,7 +10,10 @@ module.exports = {
             productId: req.product,
             text: text
         })
-            .then((data) => success200(res))
+            .then((data) => {
+                req.data = {productId: req.product, quantity: req.quantity, detail: data}
+                next()
+            })
             .catch(err => error500(res, err))
     }
 }

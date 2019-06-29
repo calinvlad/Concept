@@ -2,6 +2,7 @@ const db = require('../../../db/models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('../../../config')
+const{error500, error400} = require('../../helpers/response')
 
 function jwtSignAdmin (admin) {
     return jwt.sign(admin, config.authentication.jwtSecret, {
@@ -10,7 +11,7 @@ function jwtSignAdmin (admin) {
 }
 
 module.exports = {
-    async login(req, res) {
+    async login(req, res, next) {
         let admin;
         await db.Admin.findOne({
             where: {
@@ -21,15 +22,16 @@ module.exports = {
                 admin = data
                 bcrypt.compare(req.body.pass, data.pass)
                     .then(async (data) => {
-                        res.status(200).send({
-                            success: true,
-                            message: `Welcome ${admin.fname} ${admin.lname}`,
-                            data: admin,
-                            token: jwtSignAdmin(admin.toJSON())
-                        })
+                        if(data === false) {
+                            error400(res, data)
+                        } else {
+                            req.data = {admin: admin, token: jwtSignAdmin(admin.toJSON())}
+                            req.message = `Welcome ${admin.fname} ${admin.lname}`
+                            next()
+                        }
                     })
-                    .catch(err => {res.status(403).send({success: false, message: 'Oops, your email or password does not match'})})
+                    .catch(err => error400(res, err))
             })
-            .catch(err => res.status(500).send({success: false, message: 'Internal server error'}))
+            .catch(err => error500(res, err))
     }
 }

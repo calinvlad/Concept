@@ -1,7 +1,8 @@
 const db = require('../../../db/models')
+const{error500} = require('../../helpers/response')
 
 module.exports = {
-    async register(req, res) {
+    async register(req, res, next) {
         await db.Admin.create({
             fname: req.body.fname,
             lname: req.body.lname,
@@ -10,10 +11,13 @@ module.exports = {
             pass: req.body.pass
         })
             .then(async (data) => {
-                res.status(200).send({success: true, message: 'Your admin account was created successfully', data: data})
+                req.data = data
+                req.message = `Hello ${data.fname} ${data.lname}! Your admin account was created!`
+                next()
             })
             .catch(err => {
-                res.status(400).send({success: false, data: err})
+                // res.status(400).send({success: false, data: err})
+                error500(res, err)
             })
     },
 }
