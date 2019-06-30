@@ -6,7 +6,8 @@ const storage = multer.diskStorage({
     },
 
     filename: function(req, file, callback) {
-        if(path.extname(file.originalname) !== '.jpg') return callback(new Error('Only images are allowed'))
+        console.log('%%%%%', path.extname(file.originalname))
+        if(path.extname(file.originalname) !== '.jpg' && path.extname(file.originalname) !== '.png') return callback(new Error('Only images are allowed'))
         var fname = file.fieldname + '-' + Date.now() + path.extname(file.originalname);
         callback(null, fname);
     }

@@ -75,47 +75,46 @@ module.exports = (app) => {
         QuantityCtrlCreate.index,
         DetailCtrlCreate.index,
         Success.index)
-    app.get('/products/list', ProductCtrlRead.index)
-    app.get('/products/:productId', view.createViewProduct, view.listViewsProduct, ProductCtrlRead.listById)
+    app.get('/products/list', ProductCtrlRead.index, Success.index)
+    app.get('/products/:productId', view.createViewProduct, view.listViewsProduct, ProductCtrlRead.listById, Success.index)
     app.put('/products/update/:productId',
         CategoryCtrlRead.onProduct,
         SubcategoryCtrlRead.onProduct,
         ProductCtrlUpdate.update,
         QuantityCtrlUpdate.index,
-        //ToDo: Am ramas la Detail update
-        // DetailCtrlUpdate.index,
+        DetailCtrlUpdate.onProduct,
         Success.index)
     app.delete('/products/delete/:productId',
         ProductCtrlDelete.imagesFromFileSystem,
         ProductCtrlDelete.delete,
         Success.index)
 
-    // Category
-    app.post('/category', CategoryCtrlCreate.index)
-    app.get('/category', CategoryCtrlRead.index)
-    app.put('/category', CategoryCtrlUpdate.index)
-    app.delete('/category', CategoryCtrlDelete.index)
-
-    //Subcategory
-    app.post('/subcategory', SubcategoryCtrlCreate.index)
-    app.get('/subcategory', SubcategoryCtrlRead.index)
-    app.put('/subcategory', SubcategoryCtrlUpdate.index)
-    app.delete('/subcategory', SubcategoryCtrlDelete.index)
-
-    // Quantity
-    app.post('/products/quantity', QuantityCtrlCreate.index)
-    app.put('/products/quantity', QuantityCtrlUpdate.index)
-
     // Image
     app.post('/products/images', uploadImageService.upload.array('image' , 5), ImageCtrlCreate.create)
     app.delete('/products/images', ImageCtrlDelete.delete)
 
+    // Category
+    app.post('/category', CategoryCtrlCreate.index, Success.index)
+    app.get('/category', CategoryCtrlRead.index, Success.index)
+    app.put('/category', CategoryCtrlUpdate.index, Success.index)
+    app.delete('/category', CategoryCtrlDelete.index, Success.index)
+
+    //Subcategory
+    app.post('/subcategory', SubcategoryCtrlCreate.index, Success.index)
+    app.get('/subcategory', SubcategoryCtrlRead.index, Success.index)
+    app.put('/subcategory', SubcategoryCtrlUpdate.index, Success.index)
+    app.delete('/subcategory', SubcategoryCtrlDelete.index, Success.index)
+
+    // Quantity
+    app.post('/products/quantity', QuantityCtrlCreate.index, Success.index)
+    app.put('/products/quantity', QuantityCtrlUpdate.index, Success.index)
+
     // Detail
-    app.put('/products/details/:detailId', DetailCtrlUpdate.update)
+    app.put('/products/details/:detailId', DetailCtrlUpdate.index, Success.index)
 
     // Order
-    app.post('/orders/create', OrdersCtrlCreate.create)
-    app.get('/orders/list', OrdersCtrlRead.list)
-    app.put('/orders/update/:orderId', OrdersCtrlUpdate.update)
-    app.delete('/orders/delete/:orderId', OrdersCtrlDelete.delete)
+    // app.post('/orders/create', OrdersCtrlCreate.index)
+    // app.get('/orders/list', OrdersCtrlRead.index)
+    // app.put('/orders/update/:orderId', OrdersCtrlUpdate.index)
+    // app.delete('/orders/delete/:orderId', OrdersCtrlDelete.index)
 }

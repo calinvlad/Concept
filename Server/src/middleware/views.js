@@ -5,7 +5,6 @@ const {error500} = require('../helpers/response')
 
 module.exports = {
     async createViewProduct(req, res, next) {
-
         await db.View.create({
             productId: req.params.productId,
             view: 1,

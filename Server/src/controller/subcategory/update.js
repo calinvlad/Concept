@@ -2,7 +2,7 @@ const db = require('../../../db/models')
 const{success200, error500} = require('../../helpers/response')
 
 module.exports = {
-    async index(req, res) {
+    async index(req, res, next) {
         let categoryName;
         if(req.body.categoryName) {
             categoryName = {categoryName: req.body.categoryName}
@@ -16,7 +16,10 @@ module.exports = {
                 subcategoryId: req.query.subcategoryId
             }
         })
-            .then(data => success200(res, data))
+            .then(data => {
+                req.data = data
+                next()
+            })
             .catch(err => error500(res, err))
     }
 }

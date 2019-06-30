@@ -3,7 +3,7 @@ const moment = require('moment')
 const{success200, error500} = require('../../helpers/response')
 
 module.exports = {
-    async create(req, res) {
+    async index(req, res) {
         const user = req.query.userId
         const {products, total, address} = req.body
 

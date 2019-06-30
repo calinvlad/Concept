@@ -2,7 +2,7 @@ const db = require('../../../db/models')
 const{success200, error500} = require('../../helpers/response')
 
 module.exports = {
-    async delete(req, res) {
+    async index(req, res) {
         const order = req.params.orderId
         await db.Order.destroy({
             where: {

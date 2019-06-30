@@ -2,13 +2,16 @@ const db = require('../../../db/models')
 const{success200, error500} = require('../../helpers/response')
 
 module.exports = {
-    async index(req, res) {
+    async index(req, res, next) {
         await db.Category.findAll({
             include: [{
                 model: db.Subcategory
             }]
         })
-            .then(data => success200(res, data))
+            .then(data => {
+                req.data = data
+                next()
+            })
             .catch(err => error500(res, err))
     },
     async onProduct(req, res, next) {
