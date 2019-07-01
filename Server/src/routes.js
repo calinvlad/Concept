@@ -13,6 +13,9 @@ const AuthCtrlLogin = require('./controller/user/login')
 const AddressCtrlCreate = require('./controller/address/create')
 const AddressCrtlRead = require('./controller/address/read')
 
+// Cart
+const CartCtrlRead = require('./controller/cart/read')
+
 // Product
 const ProductCtrlRead = require('./controller/product/read')
 const ProductCtrlCreate = require('./controller/product/create')
@@ -57,6 +60,9 @@ const uploadImageService = require('./services/uploadImageService')
 
 
 module.exports = (app) => {
+
+    //Cart
+    app.get('/test', CartCtrlRead.index, Success.index)
 
     // Admin
     app.post('/auth/admin/register', AdminCtrlRegister.register, Success.index)
