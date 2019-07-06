@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS custom.Image;
 DROP TABLE IF EXISTS custom.Order;
 DROP TABLE IF EXISTS custom.Detail;
 DROP TABLE IF EXISTS custom.Spec;
-DROP TABLE IF EXISTS Cart;
+DROP TABLE IF EXISTS custom.Cart;
 DROP TABLE IF EXISTS custom.Address;
 DROP TABLE IF EXISTS custom.Product;
 DROP TABLE IF EXISTS custom.User;
@@ -44,9 +44,10 @@ CREATE TABLE custom.Address (
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE Cart (
+CREATE TABLE custom.Cart (
     cart_id INT(8) PRIMARY KEY AUTO_INCREMENT,
     products TEXT,
+    total VARCHAR(20) DEFAULT 0,
     user_id INT UNIQUE NOT NULL,
     FOREIGN KEY (user_id)
         REFERENCES User(user_id)

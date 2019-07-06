@@ -14,6 +14,7 @@ const AddressCtrlCreate = require('./controller/address/create')
 const AddressCrtlRead = require('./controller/address/read')
 
 // Cart
+const CartCtrlCreate = require('./controller/cart/create')
 const CartCtrlRead = require('./controller/cart/read')
 
 // Product
@@ -62,7 +63,7 @@ const uploadImageService = require('./services/uploadImageService')
 module.exports = (app) => {
 
     //Cart
-    app.get('/test', CartCtrlRead.index, Success.index)
+    app.get('/cart', CartCtrlRead.index, Success.index)
 
     // Admin
     app.post('/auth/admin/register', AdminCtrlRegister.register, Success.index)
@@ -70,7 +71,11 @@ module.exports = (app) => {
 
     // User
     // ToDo: Forgot && Reset Password
-    app.post('/auth/register', AuthCtrlRegister.register, AddressCtrlCreate.onRegister, Success.index)
+    app.post('/auth/register',
+        AuthCtrlRegister.register,
+        AddressCtrlCreate.onRegister,
+        CartCtrlCreate.onRegister,
+        Success.index)
     app.post('/auth/login', AuthCtrlLogin.login, AddressCrtlRead.onLogin, Success.index)
 
     // Product

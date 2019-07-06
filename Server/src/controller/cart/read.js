@@ -1,18 +1,31 @@
 const db = require('../../../db/models')
 const {error500} = require('../../helpers/response')
+const test = require('../../../test')
 
 module.exports = {
+    // async index(req, res, next) {
+    //     await db.Cart.findOne({
+    //         where: {
+    //             userId: req.query.userId
+    //
+    //         }
+    //     })
+    //         .then((data) => {
+    //             req.data = data
+    //             next()
+    //         })
+    //         .catch(err => error500(res, err))
+    // },
     async index(req, res, next) {
-        await db.Cart.findOne({
-            where: {
-                userId: req.query.userId
-
-            }
+        let total = 0;
+        test.data.forEach(product => {
+            console.log('********', parseFloat(product.price))
+            total += parseFloat(product.price)
+            console.log('total', total)
         })
-            .then((data) => {
-                req.data = data
-                next()
-            })
-            .catch(err => error500(res, err))
+
+        req.data = {total: total, products: test.data}
+
+        next()
     }
 }
