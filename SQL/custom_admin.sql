@@ -47,7 +47,7 @@ CREATE TABLE custom.Address (
 CREATE TABLE custom.Cart (
     cart_id INT(8) PRIMARY KEY AUTO_INCREMENT,
     products TEXT,
-    total VARCHAR(20) DEFAULT 0,
+    total VARCHAR(60) NOT NULL DEFAULT 0,
     user_id INT UNIQUE NOT NULL,
     FOREIGN KEY (user_id)
         REFERENCES User(user_id)

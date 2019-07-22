@@ -16,6 +16,8 @@ const AddressCrtlRead = require('./controller/address/read')
 // Cart
 const CartCtrlCreate = require('./controller/cart/create')
 const CartCtrlRead = require('./controller/cart/read')
+const CartCtrlUpdate = require('./controller/cart/update')
+const CartCtrlDelete = require('./controller/cart/delete')
 
 // Product
 const ProductCtrlRead = require('./controller/product/read')
@@ -60,10 +62,26 @@ const Success = require('./helpers/response')
 const uploadImageService = require('./services/uploadImageService')
 
 
+// Futures
+// WatchMarket
+const WatchMarketFtrRead = require('./future/watch_market/read')
+const WatchMarketFtrCreate = require('./future/watch_market/create')
+
+
 module.exports = (app) => {
+    //Export pdf with order
+    app.post('/test', CartCtrlUpdate.total)
+    app.get('/order/export', (req, res) => res.send('This will be a pdf export through mail'))
+
+    //WatchMarket
+    app.get('/watch-market', WatchMarketFtrRead.index, Success.index)
+    app.post('/watch-market', WatchMarketFtrCreate.validate, WatchMarketFtrCreate.index, Success.index)
+    app.post('/watch-market/check', WatchMarketFtrCreate.validate, Success.index)
 
     //Cart
     app.get('/cart', CartCtrlRead.index, Success.index)
+    app.put('/cart', ProductCtrlRead.checkIfValid, CartCtrlUpdate.addProduct, Success.index)
+    app.delete('/cart', ProductCtrlRead.checkIfValid, CartCtrlDelete.removeProduct, Success.index)
 
     // Admin
     app.post('/auth/admin/register', AdminCtrlRegister.register, Success.index)

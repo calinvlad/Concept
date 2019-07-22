@@ -11,7 +11,6 @@ module.exports = {
                 city: req.body.city
             })
                 .then((data) => {
-                    req.data = {user: req.user, data: data}
                     req.message = `Hello ${req.user.fname} ${req.user.lname}! Your account was created!`
                     next()
                 })

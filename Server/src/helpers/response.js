@@ -22,7 +22,7 @@ module.exports = {
     error400(res, err) {
         res.status(404).send({success: false, message: 'Bad request', data: err})
     },
-    error404(res, err) {
+    error404(res, err, message) {
         res.status(404).send({success: false, message: 'Not Found', data: err})
     },
     error500(res, err) {
