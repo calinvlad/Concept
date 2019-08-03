@@ -1,12 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-    const Order = sequelize.define('Order', {
-        orderId: {
+    const Checkout = sequelize.define('Checkout', {
+        checkoutId: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
-            field: 'order_id'
+            field: 'checkout_id'
         },
         userId: {
             type: DataTypes.INTEGER,
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
             field: 'products'
         },
         total: {
-            type: DataTypes.STRING,
+            type: DataTypes.FLOAT,
             allowNull: true,
             field: 'total'
         },
@@ -42,12 +42,12 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: false,
         freezeTableName: true
     });
-    Order.associate = function(models) {
+    Checkout.associate = function(models) {
         // associations can be defined here
-        Order.belongsTo(models.User, {
+        Checkout.belongsTo(models.User, {
             foreignKey: 'userId',
             constraints: false
         })
     };
-    return Order;
+    return Checkout;
 };

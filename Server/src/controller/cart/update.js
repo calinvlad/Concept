@@ -4,8 +4,11 @@ const {error500} = require('../../helpers/response')
 module.exports = {
     async addProduct(req, res, next) {
         const product = req.product
+        // Calculate product price based on quantity number
+        const price = req.product.price * req.product.quantity
+        product.price = price
+
         let products
-        let total
 
         await db.Cart.findOne({
             where: {
@@ -13,27 +16,38 @@ module.exports = {
             }
         })
             .then(cartData => {
-                products = JSON.parse(cartData.products)
+                products = cartData.products
                 const checkProductInCart = products.filter(data => data.productId === product.productId)
                 if (!checkProductInCart[0]) {
                     products.push(product)
-                } else {
-                    error500(res, 'Will we update quantity here?')
+                    return products
+                }
+                else {
+                    error500(res, 'Will we update quantity here? || Product already in cart?')
                 }
             })
-            .then(async () => {
-                await db.Cart.update({
-                    products: JSON.stringify(products)
-                }, {
-                    where: {
-                        userId: req.query.userId
-                    }
-                })
-                    .then((data) => {
-                        req.data = data
-                        next()
+            .then(async (products) => {
+                if (products) {
+                    // Calculate total
+                    let total =  0
+                    products.forEach(product => {
+                        total += product.price
+
                     })
-                    .catch(err => error500(res, err))
+                    await db.Cart.update({
+                        products: products,
+                        total: total
+                    }, {
+                        where: {
+                            userId: req.query.userId
+                        }
+                    })
+                        .then((data) => {
+                            req.data = data
+                            next()
+                        })
+                        .catch(err => error500(res, err))
+                }
             })
             .catch(err => error500(res, err))
     },

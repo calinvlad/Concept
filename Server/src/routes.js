@@ -50,10 +50,10 @@ const DetailCtrlCreate = require('./controller/detail/create')
 const DetailCtrlUpdate = require('./controller/detail/update')
 
 // Order
-const OrdersCtrlCreate = require('./controller/order/create')
-const OrdersCtrlRead = require('./controller/order/read')
-const OrdersCtrlUpdate = require('./controller/order/update')
-const OrdersCtrlDelete = require('./controller/order/delete')
+// const OrdersCtrlCreate = require('./controller/order/create')
+// const OrdersCtrlRead = require('./controller/order/read')
+// const OrdersCtrlUpdate = require('./controller/order/update')
+// const OrdersCtrlDelete = require('./controller/order/delete')
 
 // Response Success
 const Success = require('./helpers/response')
@@ -71,7 +71,7 @@ const WatchMarketFtrCreate = require('./future/watch_market/create')
 module.exports = (app) => {
     //Export pdf with order
     app.post('/test', CartCtrlUpdate.total)
-    app.get('/order/export', (req, res) => res.send('This will be a pdf export through mail'))
+    // app.get('/order/export', (req, res) => res.send('This will be a pdf export through mail'))
 
     //WatchMarket
     app.get('/watch-market', WatchMarketFtrRead.index, Success.index)

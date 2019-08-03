@@ -9,9 +9,14 @@ module.exports = (sequelize, DataTypes) => {
             field: 'cart_id'
         },
         products: {
-            type: DataTypes.STRING,
+            type: DataTypes.JSON,
             allowNull: false,
             field: 'products'
+        },
+        total: {
+            type: DataTypes.FLOAT,
+            allowNull: false,
+            defaultValue: 0
         },
         userId: {
             type: DataTypes.INTEGER,

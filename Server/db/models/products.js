@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       field: 'category'
     },
     price: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false,
       field: 'price'
     },

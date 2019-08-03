@@ -82,6 +82,7 @@ module.exports = {
                             req.product = productData
                             next()
                         } else {
+                            console.log('PRODUCT:::::', product)
                             error404(res, 'Too many products')
                         }
                     }
