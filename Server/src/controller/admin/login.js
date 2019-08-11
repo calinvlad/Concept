@@ -11,7 +11,7 @@ function jwtSignAdmin (admin) {
 }
 
 module.exports = {
-    async login(req, res, next) {
+    async index(req, res, next) {
         let admin;
         await db.Admin.findOne({
             where: {
@@ -22,6 +22,7 @@ module.exports = {
                 admin = data
                 bcrypt.compare(req.body.pass, data.pass)
                     .then(async (data) => {
+                        console.log('DDDDDDDD', data)
                         if(data === false) {
                             error400(res, data)
                         } else {

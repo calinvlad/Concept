@@ -3,12 +3,11 @@ const {error500} = require('../../helpers/response')
 
 module.exports = {
     async addProduct(req, res, next) {
-        const product = req.product
         // Calculate product price based on quantity number
-        const price = req.product.price * req.product.quantity
+        // productId | product.quantity | userId
+        const product = req.product
+        const price = req.product.basePrice * req.product.quantity
         product.price = price
-
-        let products
 
         await db.Cart.findOne({
             where: {
@@ -16,23 +15,31 @@ module.exports = {
             }
         })
             .then(cartData => {
-                products = cartData.products
+                const products =
+                    typeof cartData.products === 'string' ?  JSON.parse(cartData.products) : cartData.products
+
                 const checkProductInCart = products.filter(data => data.productId === product.productId)
                 if (!checkProductInCart[0]) {
                     products.push(product)
                     return products
                 }
                 else {
-                    error500(res, 'Will we update quantity here? || Product already in cart?')
+                    products.forEach((prod, i) => {
+                        if (prod.productId === req.product.productId) {
+                            products[i].price = products[i].basePrice  * req.product.quantity
+                            products[i].quantity = req.product.quantity
+                        }
+                    })
+                    return products
                 }
             })
             .then(async (products) => {
                 if (products) {
                     // Calculate total
+                    // For each product with price formatted based on the product quantity
                     let total =  0
                     products.forEach(product => {
                         total += product.price
-
                     })
                     await db.Cart.update({
                         products: products,
@@ -49,46 +56,9 @@ module.exports = {
                         .catch(err => error500(res, err))
                 }
             })
-            .catch(err => error500(res, err))
-    },
-    async total(req, res) {
-        let cartId
-        await db.Cart.findOne({
-            where: {
-                userId: req.query.userId
-            },
-            attributes: ['cartId', 'products', 'total', 'userId']
-        })
-            .then(async cart => {
-                console.log('cccc', cart)
-
-                cartId = cart.cartId
-                let total = 0
-                console.log('1', total)
-                const products = JSON.parse(cart.products)
-                products.forEach(product => {
-                    total += parseFloat(product.price)
-                    console.log(2, total)
-                })
-                return total
+            .catch(err => {
+                console.log('EEEE', err)
+                error500(res, err)
             })
-            .then(async total => {
-                console.log('total', total)
-                console.log('cartid', cartId)
-
-                await db.Cart.update({
-                    total: total
-                },{
-                    where: {
-                        userId: req.query.userId
-                    }
-                })
-                    .then(updatedCart => {
-                        console.log(updatedCart)
-                        res.status(200).send({data: updatedCart})
-                    })
-                    .catch(err => error500(res, err))
-            })
-            .catch(err => error500(res, err))
     }
 }

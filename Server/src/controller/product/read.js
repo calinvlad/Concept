@@ -57,6 +57,7 @@ module.exports = {
                 'productId',
                 'name',
                 'category',
+                'basePrice',
                 'price'
             ],
             include: [{
@@ -78,11 +79,17 @@ module.exports = {
                             productData['name'] = product.name
                             productData['category'] = product.category
                             productData['price'] = product.price
+                            productData['basePrice'] = product.basePrice
                             productData['quantity'] = requestQuantity
                             req.product = productData
-                            next()
+                            if (product.quantity === 0) {
+                                error500(res, `Product quantity can't be 0`)
+                            } else if (product.price === 0) {
+                                error500(res, `Product price can't be 0`)
+                            } else {
+                                next()
+                            }
                         } else {
-                            console.log('PRODUCT:::::', product)
                             error404(res, 'Too many products')
                         }
                     }

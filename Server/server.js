@@ -20,5 +20,5 @@ require('./src/routes')(app)
 
 sequelize.sync({force: false})
 .then(() => {
-    app.listen(config.PORT, () => {console.log(`Server started on port ${config.PORT}`)})
+    app.listen(config.PORT, '0.0.0.0', () => {console.log(`Server started on port ${config.PORT}`)})
 })

@@ -9,3 +9,8 @@ or
 ```
 SET GLOBAL time_zone = '+3:00';
 ```
+
+Datetime will work in the following format:
+```
+YYYY-MM-DD HH:mm:ss
+```

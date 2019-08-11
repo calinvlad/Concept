@@ -4,6 +4,8 @@ const view = require('./middleware/views')
 // Admin
 const AdminCtrlRegister = require('./controller/admin/register')
 const AdminCtrlLogin = require('./controller/admin/login')
+const AdminCtrlForgot = require('./controller/admin/forgot')
+const AdminCtrlRestorePassword = require('./controller/admin/restore')
 
 // User
 const AuthCtrlRegister = require('./controller/user/register')
@@ -49,8 +51,8 @@ const ImageCtrlDelete = require('./controller/image/delete')
 const DetailCtrlCreate = require('./controller/detail/create')
 const DetailCtrlUpdate = require('./controller/detail/update')
 
-// Order
-// const OrdersCtrlCreate = require('./controller/order/create')
+// Checkout
+const CheckoutCtrlCreate = require('./controller/checkout/create')
 // const OrdersCtrlRead = require('./controller/order/read')
 // const OrdersCtrlUpdate = require('./controller/order/update')
 // const OrdersCtrlDelete = require('./controller/order/delete')
@@ -67,11 +69,15 @@ const uploadImageService = require('./services/uploadImageService')
 const WatchMarketFtrRead = require('./future/watch_market/read')
 const WatchMarketFtrCreate = require('./future/watch_market/create')
 
+const MailServiceResetPassword = require('./services/mail/reset_password')
+
 
 module.exports = (app) => {
-    //Export pdf with order
-    app.post('/test', CartCtrlUpdate.total)
-    // app.get('/order/export', (req, res) => res.send('This will be a pdf export through mail'))
+    // Checkout
+    app.post('/checkout', CheckoutCtrlCreate.index, Success.index)
+
+
+    app.post('/mail', MailServiceResetPassword.index, Success.index)
 
     //WatchMarket
     app.get('/watch-market', WatchMarketFtrRead.index, Success.index)
@@ -85,7 +91,10 @@ module.exports = (app) => {
 
     // Admin
     app.post('/auth/admin/register', AdminCtrlRegister.register, Success.index)
-    app.post('/auth/admin/login', AdminCtrlLogin.login, Success.index)
+    app.post('/auth/admin/login', AdminCtrlLogin.index, Success.index)
+    app.post('/auth/admin/forgot', AdminCtrlForgot.index, Success.index)
+    app.post('/auth/admin/restore', AdminCtrlRestorePassword.index, Success.index)
+
 
     // User
     // ToDo: Forgot && Reset Password

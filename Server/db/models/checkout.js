@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             field: 'user_id'
         },
         products: {
-            type: DataTypes.STRING,
+            type: DataTypes.JSON,
             allowNull: true,
             field: 'products'
         },
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
             field: 'total'
         },
         address: {
-            type: DataTypes.STRING,
+            type: DataTypes.JSON,
             allowNull: true,
             field: 'address'
         },
@@ -37,6 +37,11 @@ module.exports = (sequelize, DataTypes) => {
             type: 'TIMESTAMP',
             allowNull: false,
             field: 'updated',
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            field: 'status'
         }
     }, {
         timestamps: false,

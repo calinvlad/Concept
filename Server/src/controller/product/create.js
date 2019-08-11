@@ -12,6 +12,7 @@ module.exports = {
             name: name,
             category: category.name,
             price: price,
+            basePrice: price,
             adminId: admin,
             created: moment().format('YYYY/MM/DD HH:mm:ss'),
             updated: moment().format('YYYY/MM/DD HH:mm:ss')

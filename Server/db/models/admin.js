@@ -1,14 +1,16 @@
 'use strict';
 const bcrypt = require('bcrypt')
 
-function hash(user, options) {
-    const saltRounds = 10;
-    return bcrypt.genSalt(saltRounds)
+function hash (user, options) {
+    const SALT_FACTOR = 8
+    return bcrypt
+        .genSalt(SALT_FACTOR)
         .then(salt => bcrypt.hash(user.pass, salt, null))
         .then(hash => {
             user.setDataValue('pass', hash)
         })
 }
+
 
 module.exports = (sequelize, DataTypes) => {
     const Admin = sequelize.define('Admin', {
@@ -55,6 +57,7 @@ module.exports = (sequelize, DataTypes) => {
     Admin.associate = function(models) {
         Admin.hasMany(models.Product, {foreignKey: 'productId'})
     };
+
 
     return Admin;
 };

@@ -3,14 +3,13 @@ const {error500} = require('../../helpers/response')
 
 module.exports = {
     async onRegister(req, res, next) {
-        console.log('HERE I AM CREATING A CART')
-        const products = JSON.stringify([])
-
+        const products = []
         await db.Cart.create({
             products: products,
             userId: req.user.userId || req.params.userId || req.query.userId
         })
             .then((data) => {
+                console.log('CART WAS CREATED SUCCESSFULLY')
                 req.cart = data
                 next()
             })

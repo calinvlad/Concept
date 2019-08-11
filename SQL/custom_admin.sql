@@ -61,6 +61,7 @@ CREATE TABLE Product (
   name VARCHAR(60) NOT NULL,
   category VARCHAR(60) NOT NULL,
   price FLOAT NOT NULL,
+  base_price FLOAT NOT NULL,
   admin_id INT NOT NULL,
   created DATETIME NOT NULL,
   updated DATETIME NOT NULL,

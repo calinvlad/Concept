@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'price'
     },
+    basePrice: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      field: 'base_price'
+    },
     adminId: {
       type: DataTypes.INTEGER,
       allowNull: false,
