@@ -9,11 +9,11 @@ module.exports = {
     },
     // Mail
     FROMMAIL: process.env.FROMMAIL || 'noreply@custom.com',
-    MAIL: process.env.MAIL || 'calinvlad.t@gmail.com',
-    MAILPASSWORD: process.env.MAILPASSWORD || 'nikeul12',
-    MAILHOST: process.env.MAILHOST || 'smtp.gmail.com',
-    MAILPORT: process.env.MAILPORT || 587,
-    MAILSECURE: process.env.MAILSECURE || false,
+    MAIL: process.env.MAIL,
+    MAILPASSWORD: process.env.MAILPASSWORD,
+    MAILHOST: process.env.MAILHOST,
+    MAILPORT: process.env.MAILPORT
+    MAILSECURE: process.env.MAILSECURE,
 
     // Checkout
     checkout: {
